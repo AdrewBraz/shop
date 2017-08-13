@@ -7,18 +7,23 @@ export default class Item extends React.Component{
         const isAvailable = details.status === 'available'
         const buttonText = isAvailable ? 'Add To Order' : 'Sold out' 
         return(
-            <li className="menu-fish">
-                <img src={ details.image } alt={ details.name }/>
-                <h3 className="fish-name">
+            <li className="menu-list__item">
+                <img className="item__img" src={ details.image } alt={ details.name }/>
+                <h3 className="item__name">
                     { details.name}
-                    <span className="price">
+                    <span className="item__price">
                         { formatPrice(details.price) }
                     </span>
                 </h3>
-                <p>
+                <p className="item__text">
                     { details.desc }
                 </p>
-                <button onClick={() => this.props.addItem(id) } disabled={ !isAvailable }>{ buttonText }</button>
+                <button 
+                    className="item__btn"
+                    onClick={() => this.props.addToOrder(id) } 
+                    type={ !isAvailable ? 'disabled' : '' } 
+                    disabled={ !isAvailable }>{ buttonText }
+                </button>
             </li>
         )
     }

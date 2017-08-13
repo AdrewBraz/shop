@@ -1,0 +1,45 @@
+
+.order-list
+  list-style none
+  margin 0
+  padding 0
+  
+  &__item
+    border-bottom 1px solid black
+    padding 2rem 0
+    display flex
+    font-size 1.4rem
+    justify-content space-between
+    align-items center
+
+    &::hover
+      +.order-list__button
+        display inline
+
+    &--total
+      font-weight 600
+      border-bottom 3px solid black
+      border-top 3px double black
+
+    &--price
+      font-size 1.2rem
+
+    &--unavailable
+      text-decoration line-through
+      background lighten(red, 80%)  
+
+    &--count
+      position relative
+      overflow hidden
+      float left // only works if it's floated?!
+      span
+        display inline-block
+        // transition all 0.5s    
+  &__button
+    border 0
+    display none
+    line-height 1
+    padding 0
+
+.order-title
+  text-align center

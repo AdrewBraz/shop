@@ -3,12 +3,14 @@ import React from 'react'
 export default class AddForm extends React.Component{
     createItem(e){
         e.preventDefault()
+        const num = Date.now()
         const item = {
             name: this.name.value,
             price: this.price.value,
             status: this.status.value,
             desc: this.desc.value,
-            image: this.image.value
+            image: this.image.value,
+            id: num
         }
         this.props.addItem(item)
         this.form.reset()

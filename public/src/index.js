@@ -2,17 +2,17 @@ import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter, Match, Miss } from 'react-router'
 
-import './css/style.css'
+import './css/style.styl'
 import App from './components/App'
 import Store from './components/Store'
 import NotFound from './components/NotFound'
 
 const Root = () => {
     return( 
-      <BrowserRouter>
+      <BrowserRouter >
         <div>
           <Match exactly pattern="/" component={ Store }/>
-          <Match exactly pattern="/store/:storeId" component={ App }/>
+          <Match exactly pattern="/store/:storeId" params={this} component={ App }/>
           <Miss component={ NotFound }/>
         </div>
       </BrowserRouter>

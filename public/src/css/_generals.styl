@@ -1,0 +1,88 @@
+.edit
+  margin-bottom 20px
+  border 2px solid black
+  overflow hidden
+  display flex
+  flex-wrap wrap
+
+
+input, textarea, select
+  width 33.33%
+  padding 10px
+  line-height 1
+  font-size 1.2rem
+  border 0
+  border-bottom 1px solid black
+  border-right 1px solid black
+  appearance none
+  border-radius 0
+  background white
+  &:focus
+    outline 0
+    background lighten(orange, 85%)
+
+textarea
+  width 100%
+
+input:last-of-type
+    width 100%
+
+button
+  width 100% 
+  border 0
+
+button, input[type=submit]
+  width 1rem
+  text-transform uppercase
+  background none
+  border 1px solid black
+  font-weight 600
+  font-size 1.5rem
+  font-family 'Open Sans'
+  transition all 0.2s
+  position relative
+  z-index 2
+
+  &[type='disabled']
+    width 40%
+    color red
+    background white
+    border-color red
+    transform rotate(-10deg) scale(2) translateX(50%) translateY(-50%)
+    &::hover
+      color red
+      cursor not-allowed
+    &::after
+      display none
+  &::after
+    content ''
+    z-index -1
+    display block
+    background black
+    position absolute
+    width 100%
+    height 0
+    left 0
+    top 0
+    transition all 0.2s
+  &::hover, &::focus
+    color white
+    outline 0
+    &:after
+      height 100%
+  // variants
+
+
+// Store Selector
+.store-selector
+  background white
+  max-width 500px
+  margin 50px auto
+  padding 2rem
+  border 2px solid black
+
+  input, button
+    width 100%
+    &[type="text"]
+      text-align center
+      font-size 3rem

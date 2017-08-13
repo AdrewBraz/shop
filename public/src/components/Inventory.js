@@ -8,17 +8,19 @@ export default class Inventory extends React.Component{
     }
 
     handleChange(e, key){
-        const fish = this.props.fishes[key]
-        const updated = { ...fish,
+        const id = this.props.menu[key].id
+        const item = this.props.menu[key]
+        const updated = { ...item,
             [e.target.name]: e.target.value
         }
-        this.props.upDatedFish(key, updated)
+        this.props.updateItem(id, updated)
     }
 
     renderInventory(key){
-        const fish = this.props.fishes[key]
+        const fish = this.props.menu[key]
+        const id = this.props.menu[key].id
         return(
-            <div className="fish-edit" key={key}>
+            <div className="edit" id={ id } key={ key }>
                 <input type="text" onChange={(e)=> {this.handleChange(e, key)}} name="name" value={fish.name} placeholder="Fish Name"/>
                 <input  onChange={(e)=> {this.handleChange(e, key)}} type="text" name="price" value={fish.price} placeholder="Fish Price"/>
                 <select  onChange={(e)=> {this.handleChange(e, key)}} type="text" name="status" value={fish.status} placeholder="Fish Status">
@@ -27,7 +29,7 @@ export default class Inventory extends React.Component{
                 </select>
                 <textarea  onChange={(e)=> {this.handleChange(e, key)}} type="text" name="desc" placeholder="Fish Desc" value={fish.desc}></textarea>
                 <input  onChange={(e)=> {this.handleChange(e, key)}} type="text" name="image" placeholder="Fish Image" value={fish.image}/> 
-                <button onClick={() => this.props.removeFish(key) }>remove item</button>
+                <button onClick={() => this.props.removeItem(id) }>remove item</button>
             </div>
         )
     }
@@ -37,9 +39,8 @@ export default class Inventory extends React.Component{
         return(
             <div>
                 <h2>inventory</h2>
-                {Object.keys(this.props.fishes).map(this.renderInventory.bind(this))}
+                {Object.keys(this.props.menu).map(this.renderInventory.bind(this))}
                 <AddForm addItem={ this.props.addItem }/>
-                <button onClick={this.props.loadSamples}>Load Samples</button>
             </div>
         )
     }
