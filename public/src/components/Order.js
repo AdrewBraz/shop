@@ -11,7 +11,7 @@ export default class Order extends React.Component{
         const button = <button className="order-list__button" onClick={() =>  this.props.removeFromOrder(key)}>&times;</button>
        
         if(!item || item.status === 'unavailable'){
-            return <li className="order-list__item--unavailable" key={key}> Sorry, { item ? item.name : 'fish' } is no longer available </li>
+            return <li className="order-list__item--unavailable" key={key}> Sorry, { item ? item.name : 'item' } is no longer available </li>
         }
 
         return(

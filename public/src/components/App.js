@@ -43,7 +43,7 @@ export default class App extends React.Component{
         switch(storeId){
             case "catch of the day":
               return MenuActions.setMenu(fishes)
-            case "king of the grill":
+            case "king grill":
               return MenuActions.setMenu(meat)
             case "beer card":
               return MenuActions.setMenu(beer)
@@ -81,7 +81,7 @@ export default class App extends React.Component{
         return(
             <div className="catch-of-the-day">
                 <div className="menu">
-                    <Header tagline='Freash SeaFood Market'/>
+                    <Header params={ this.props.params }/>
                     <ul className="menu-list">
                         {
                             Object.keys(this.state.menu)

@@ -12,9 +12,10 @@
     justify-content space-between
     align-items center
 
-    &::hover
-      +.order-list__button
+    &:hover
+      .order-list__button
         display inline
+        background none
 
     &--total
       font-weight 600
@@ -40,6 +41,8 @@
     display none
     line-height 1
     padding 0
+    width auto
+    color black
 
 .order-title
   text-align center

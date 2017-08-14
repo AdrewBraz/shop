@@ -1,7 +1,15 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack')
+const webpack = require('webpack');
+
+const isProd = process.env.NODE_ENV === 'production';
+const cssDev = ['style-loader', 'css-loader', 'stylus-loader'];
+const cssProd =  ExtractTextPlugin.extract({    
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'stylus-loader']
+                })
+const cssConfig = isProd ? cssProd : cssDev;
 
 
 module.exports = {
@@ -27,11 +35,7 @@ module.exports = {
         rules: [
             {
                 test: /\.styl$/,
-                use: ExtractTextPlugin.extract({    
-                    fallback: 'style-loader',
-                    use: ['css-loader', 'stylus-loader'],
-                    publicPath: 'style.css'
-                })
+                use: cssConfig
             },
             {
                 test: /\.js$/,
@@ -39,18 +43,33 @@ module.exports = {
                 use: {
                     loader: 'babel-loader'
                 }
+            },
+            {
+                test: /\.svg$/,
+                loader: 'svg-sprite-loader'
+            },
+            {
+                test: /\.(eot|ttf|woff|woff2)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: './fonts/[name].[ext]'
+}  
+                    }
+                ]
             }
-            // {
-            //     test: /\.svg$/,
-            //     loader: 'svg-sprite-loader'
-            // }
         ]
     },
 
-    devtool: 'cheap-inline-module-source-map',
+    devtool: isProd ?  false : 'cheap-inline-module-source-map',
+
 
     plugins: [
-        new ExtractTextPlugin('style.css'),
+        new ExtractTextPlugin({
+            filename: 'style.css',
+            disable: !isProd
+        }),
         new HtmlWebpackPlugin({
             title: 'Custom template',
             minify: {
@@ -59,5 +78,6 @@ module.exports = {
             template: './public/index.html'
         }),
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin()
     ]
 };
