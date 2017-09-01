@@ -1,5 +1,7 @@
 # Restraunt-menu app
 
+⚓ 🍺 🍔
+
 ### This app is build with:
 * React
 * Flux
