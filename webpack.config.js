@@ -1,12 +1,12 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 
 const isProd = process.env.NODE_ENV === 'production';
 const cssDev = ['style-loader', 'css-loader', 'stylus-loader'];
-const cssProd =  ExtractTextPlugin.extract({    
+const cssProd = new MiniCssExtractPlugin({    
                     fallback: 'style-loader',
                     use: ['css-loader', 'stylus-loader']
                 })
@@ -14,9 +14,9 @@ const cssConfig = isProd ? cssProd : cssDev;
 
 
 module.exports = {
-    entry: {
-        app: './public/src/index.js'
-    },
+    entry: [
+        `${__dirname}/public/src/index.js`
+    ],
 
     output: {
         path: path.resolve(__dirname, './public/dist'),
@@ -67,17 +67,17 @@ module.exports = {
 
 
     plugins: [
-        new ExtractTextPlugin({
+        new MiniCssExtractPlugin({
             filename: 'style.css',
             disable: !isProd
         }),
-        new HtmlWebpackPlugin({
-            title: 'Custom template',
-            minify: {
-                collapseWhitespace: true,
-            },
-            template: './public/index.html'
-        }),
+        // new HtmlWebpackPlugin({
+        //     title: 'Custom template',
+        //     minify: {
+        //         collapseWhitespace: true,
+        //     },
+        //     template: './public/index.html'
+        // }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin()
     ]

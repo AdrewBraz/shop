@@ -1,4 +1,6 @@
 'use strict';
+
+const fs = require('fs');
 const express = require('express');
 const http = require('http');
 const app = express();
@@ -10,11 +12,11 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-
-app.use(express.static(__dirname + '/public/dist'));
+app.use(express.static(`${__dirname}/public/dist/`));
 
 app.get('*', function(req, res) {
-  res.sendFile(__dirname + '/public/dist/index.html');
+  console.log()
+  res.sendFile(`${__dirname}/public/dist/index.html`);
 });
 
 const server = http.createServer(app);
