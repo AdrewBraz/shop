@@ -14,23 +14,17 @@ const cssConfig = isProd ? cssProd : cssDev;
 
 
 module.exports = {
-    entry: [
-        `${__dirname}/public/src/index.js`
-    ],
-
-    output: {
-        path: path.resolve(__dirname, './public/dist'),
-
-        filename: '[name].bundle.js'
-    },
-
-    devServer: {
-        contentBase: path.join(__dirname, './public/dist'),
-        compress: true,
-        stats: 'minimal',
-        open: true,
-        port: 3001
-    },
+mode: process.env.NODE_ENV || 'development',
+  entry: [
+    `${__dirname}/src/index.js`,
+  ],
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+  output: {
+    path: `${__dirname}/dist/public`,
+    publicPath: '/assets/',
+  },
 
     module: {
         rules: [
@@ -55,30 +49,11 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: './fonts/[name].[ext]'
+                            name: `fonts/[name].[ext]`
 }  
                     }
                 ]
             }
         ]
     },
-
-    devtool: isProd ?  false : 'cheap-inline-module-source-map',
-
-
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'style.css',
-            disable: !isProd
-        }),
-        // new HtmlWebpackPlugin({
-        //     title: 'Custom template',
-        //     minify: {
-        //         collapseWhitespace: true,
-        //     },
-        //     template: './public/index.html'
-        // }),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin()
-    ]
 };

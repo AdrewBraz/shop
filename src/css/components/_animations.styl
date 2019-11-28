@@ -1,0 +1,35 @@
+.order-enter
+  transition all .6s
+  transform translateX(-120%)
+  max-height 0
+  padding 0 !important
+
+  &.order-enter-active
+    max-height 60px
+    padding 2rem !important
+    transform translateX(0)
+
+.order-leave
+  transition all .6s
+  transform translateX(0)
+
+  &.order-leave-active
+    transform translateX(-120%)
+    max-height 0
+    padding 0  
+
+.count-enter
+  transition all .25s
+  transform translateY(100%)
+   
+  &.count-enter-active
+    transform translateY(0)
+.count-leave
+  position absolute
+  top 0
+  bottom 0
+
+  transition all .25s
+  transform translateY(0)   
+  &.count-leave-active
+    transform translateY(-100%)

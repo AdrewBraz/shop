@@ -39,20 +39,25 @@
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "history": "4.2.0",
+    "pug": "^2.0.4",
     "re-base": "2.2.0",
     "react": "^16.12.0",
     "react-addons-css-transition-group": "15.3.2",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
     "react-router-dom": "^5.1.2",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "scripts": {
     "app": "nodemon server.js",
     "dev": "webpack-dev-server",
     "prod": "npm run clean && set NODE_ENV=production && webpack -p",
+    "build-server": "babel server --out-dir dist --source-maps inline",
+    "build": "npm run prod && npm run build-server",
     "clean": "rimraf ./public/dist/*",
-    "start": "babel-node ./server/bin/slack.js"
+    "start": "babel-node ./server/bin/app.js"
   },
   "eslintConfig": {
     "extends": "./node_modules/react-scripts/.eslintrc"
