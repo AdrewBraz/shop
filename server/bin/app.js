@@ -1,5 +1,10 @@
-import server from '..';
+#! /usr/bin/env node
 
-const port = process.env.PORT || 3000;
+import getApp from '../index.js';
 
-server().listen(port, () => console.log(`port: ${port}`));
+const port = process.env.PORT || 4000;
+console.log(port)
+const app = getApp();
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server has been started on ${port}`);
+});

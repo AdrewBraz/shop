@@ -1,42 +1,43 @@
 'use strict';
 
-import express from 'express';
-import http  from 'http';
-import cors  from 'cors';
-import bodyParser  from 'body-parser';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from '../webpack.config';
+import path from 'path';
+import Pug from 'pug';
+import fastify from 'fastify';
+import pointOfView from 'point-of-view';
+import fastifyStatic from 'fastify-static';
+import _ from 'lodash';
 
-const compiler = webpack(config)
+const isProduction = process.env.NODE_ENV === 'production';
+const appPath = path.join(__dirname, '..');
+const isDevelopment = !isProduction;
 
-export default () => {
-  const app = express();
-  app.use(cors());
-  app.use(bodyParser.json());
-  app.set('view engine', 'pug')
-
-  app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath,
-    stats: { colors: true },
-    watchOptions: {
-        aggregateTimeout: 300,
-        poll: true
+const setUpViews = (app) => {
+  const domain = isDevelopment ? 'http://localhost:8080' : '';
+  app.register(pointOfView, {
+    engine: {
+      pug: Pug,
     },
-}));
-
-app.use(webpackHotMiddleware(compiler, {
-    log: console.log,
-}));
-  app.use(express.static(`${__dirname}/../public/dist/`));
-
-  app.get('*', function(req, res) {
-    console.log()
-    res.render('index');
+    defaultContext: {
+      assetPath: (filename) => `${domain}/assets/${filename}`,
+    },
+    templates: path.join(__dirname, 'views'),
   });
+};
 
-  const server = http.createServer(app);
-  return server;
-}
+const setUpStaticAssets = (app) => {
+  app.register(fastifyStatic, {
+    root: path.join(appPath, 'dist/public'),
+    prefix: '/assets',
+  });
+};
+
+export default (state = {}) => {
+  const app = fastify();
+
+  setUpViews(app);
+  setUpStaticAssets(app);
+
+  // addRoutes(app, state);
+
+  return app;
+};
