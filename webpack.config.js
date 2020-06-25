@@ -1,17 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-
-
-const isProd = process.env.NODE_ENV === 'production';
-const cssDev = ['style-loader', 'css-loader', 'stylus-loader'];
-const cssProd = new MiniCssExtractPlugin({    
-                    fallback: 'style-loader',
-                    use: ['css-loader', 'stylus-loader']
-                })
-const cssConfig = isProd ? cssProd : cssDev;
-
+const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = !isProduction;
 
 module.exports = {
 mode: process.env.NODE_ENV || 'development',
@@ -25,13 +15,33 @@ mode: process.env.NODE_ENV || 'development',
     path: `${__dirname}/dist/public`,
     publicPath: '/assets/',
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css'
+    })
+  ],
 
     module: {
         rules: [
+            // {
+            //     test: /\.styl$/,
+            //     use:  ['style-loader', 'css-loader', 'stylus-loader']
+            // },
             {
                 test: /\.styl$/,
-                use: cssConfig
-            },
+                use:[
+                  {
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                      reloadAll: true,
+                      sourceMap: isDevelopment,
+                      hmr: isDevelopment,
+                    },
+                  },
+                  { loader: 'css-loader', options: { sourceMap: isDevelopment } },
+    { loader: 'stylus-loader', options: { sourceMap: isDevelopment } },
+                ],
+              },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
