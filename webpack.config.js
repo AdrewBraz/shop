@@ -1,7 +1,20 @@
-const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+<<<<<<< HEAD
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = !isProduction;
+=======
+const webpack = require('webpack');
+
+
+const isProd = process.env.NODE_ENV === 'production';
+const cssDev = ['style-loader', 'css-loader', 'stylus-loader'];
+const cssProd = new MiniCssExtractPlugin({    
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'stylus-loader']
+                })
+const cssConfig = isProd ? cssProd : cssDev;
+
+>>>>>>> 67b5ba5fb0a5916cf3a9a7cb259bf444a4be62e8
 
 module.exports = {
 mode: process.env.NODE_ENV || 'development',
