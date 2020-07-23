@@ -5,6 +5,7 @@ import Pug from 'pug';
 import fastify from 'fastify';
 import pointOfView from 'point-of-view';
 import fastifyStatic from 'fastify-static';
+import fastifyMongo from 'fastify-mongodb'
 import _ from 'lodash';
 import addRoutes from './routes.js';
 
@@ -30,6 +31,10 @@ const setUpStaticAssets = (app) => {
     root: path.join(appPath, 'dist/public'),
     prefix: '/assets',
   });
+  // app.register(fastifyMongo, {
+  //   forceClose: true,
+  //   url: 'mongodb://Mos:KHq.Wd87isFt4XF@ds040167.mlab.com:40167/restik'
+  // })
 };
 
 export default (state = {}) => {
@@ -38,7 +43,7 @@ export default (state = {}) => {
   setUpViews(app);
   setUpStaticAssets(app);
 
-  addRoutes(app, state);
+  addRoutes(app);
 
   return app;
 };
