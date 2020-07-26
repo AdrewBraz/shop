@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import dispatcher from '../dispatcher'
+import dispatcher from '../dispatcher';
 
 // class OrderStore extends EventEmitter{
 //     constructor(){
@@ -13,7 +13,7 @@ import dispatcher from '../dispatcher'
 
 //     addToOrder(id){
 //         this.order = { ...this.order }
-//         this.order[id] = this.order[id] + 1 || 1 
+//         this.order[id] = this.order[id] + 1 || 1
 //         this.emit('change')
 //     }
 
@@ -28,13 +28,13 @@ import dispatcher from '../dispatcher'
 //             case "ADD_TO_ORDER":
 //               this.addToOrder(action.id)
 //               break;
-             
+
 //             case "REMOVE_FROM_ORDER":
-//               this.removeFromOrder(action.id) 
-//               break; 
-              
+//               this.removeFromOrder(action.id)
+//               break;
+
 //             default:
-//               break;  
+//               break;
 //         }
 //     }
 // }
