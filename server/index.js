@@ -6,11 +6,16 @@ import fastify from 'fastify';
 import pointOfView from 'point-of-view';
 import fastifyStatic from 'fastify-static';
 import _ from 'lodash';
+import mongoose from 'mongoose';
 import addRoutes from './routes.js';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const appPath = path.join(__dirname, '..');
 const isDevelopment = !isProduction;
+
+mongoose.connect('mongodb://Mos:KHq.Wd87isFt4XF@ds040167.mlab.com:40167/restik', { useNewUrlParser: true })
+  .then(() => console.log('MongoDB has been connected'))
+  .catch((err) => console.log(err));
 
 const setUpViews = (app) => {
   const domain = isDevelopment ? 'http://localhost:8080' : '';
