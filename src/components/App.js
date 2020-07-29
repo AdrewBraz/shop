@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
+import Store from './Store';
 
-export default class App extends React.Component{
-    render(){
-        console.log(this.props)
-        return(
-            <div className="catch-of-the-day">
-                <p>ddd</p>
-            </div>
-        )
-    }
+export default class App extends React.Component {
+  render() {
+    return (
+      <div className="catch-of-the-day">
+        <Store props={this.props}/>
+      </div>
+    );
+  }
 }
