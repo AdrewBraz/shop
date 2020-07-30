@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "bin": {
-    "slack": "dist/bin/app.js"
+    "app": "dist/bin/app.js"
   },
   "engines": {
     "node": "9"
@@ -15,7 +15,7 @@
     "build-app": "npx webpack -p --env production",
     "build": "npm run build-app && npm run build-server",
     "postinstall": "npm run build",
-    "start": "babel-node ./server/bin/slack.js"
+    "start": "dist/bin/app.js"
   },
   "repository": {
     "type": "git",

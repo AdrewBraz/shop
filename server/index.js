@@ -46,7 +46,6 @@ export default (state = {}) => {
 
   setUpViews(app);
   setUpStaticAssets(app);
-
   addRoutes(app);
 
   return app;

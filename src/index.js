@@ -14,14 +14,14 @@ const store = configureStore({
   reducer: reducers,
 });
 
-const Root = ({ store }) => (
+const Root = ({ store }) => {
+  return (
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Store} />
-        <Route path="/:store" component={App} />
+        <Route exact path="/:id" component={App} />
       </Switch>
     </BrowserRouter>
   </Provider>
-);
+)}
 render(<Root store={store} />, document.getElementById('main'));

@@ -1,8 +1,7 @@
 import Item from '../models/item';
 
-exports.getItem = async (req, reply) => {
+exports.getItem = async (id) => {
   try {
-    const { id } = req.params;
     const coll = await Item.find(id);
     return coll;
   } catch (err) {
