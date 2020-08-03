@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
+import axios from 'axios';
 
 export default (props) => {
   const history = useHistory();
@@ -9,7 +10,9 @@ export default (props) => {
   const generateOnSubmit = () => async (values) => {
     const { store } = values;
     try {
-      history.push(`/${store}`);
+      const coll = axios.get(`/store/${store}`)
+                        .then(res => res);
+      console.log(coll)
     } catch (e) {
       console.log(e)
       throw new Error('Something went wrong');

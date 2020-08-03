@@ -2,10 +2,10 @@ import Item from '../models/item';
 
 exports.getItem = async (id) => {
   try {
-    const coll = await Item.find(id);
-    return coll;
-  } catch (err) {
-    throw new Error(err);
+    const coll = await Item.find({})
+    console.log(coll)
+  }catch(e){
+    console.log(e)
   }
 };
 

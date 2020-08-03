@@ -5,8 +5,16 @@ export default (router, str) => router
   .get('/', (_req, reply) => {
     reply.view('index.pug');
   })
-  .get('/:', (_req, reply) => {
+  .get('/store/:id', function(_req, reply){
     const { id } = _req.params;
-    console.log(_req)
-    reply.send(itemController.getItem(id))
+    const db = this.mongo.db;
+    db.collection(`beer`, async (err, col) => {
+    try{
+      for await(const doc of col.find()){
+        console.log(doc)
+      }
+      } catch(err){
+      console.log(err)
+    }
+    })
   })

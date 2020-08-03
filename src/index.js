@@ -19,7 +19,8 @@ const Root = ({ store }) => {
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/:id" component={App} />
+        <Route exact path="/" component={App} />
+        <Route exact path="/store/:id" component={Store} />
       </Switch>
     </BrowserRouter>
   </Provider>

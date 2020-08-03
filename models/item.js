@@ -10,4 +10,4 @@ const ItemSchema = new Schema({
   status: String,
 });
 
-export default mongoose.model('Item', ItemSchema);
+export default mongoose.model('beer', ItemSchema);
