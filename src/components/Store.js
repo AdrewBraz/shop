@@ -10,9 +10,7 @@ export default (props) => {
   const generateOnSubmit = () => async (values) => {
     const { store } = values;
     try {
-      const coll = axios.get(`/store/${store}`)
-                        .then(res => res);
-      console.log(coll)
+      const coll = await axios.get(`/store/${store}`).then(res => res, null)
     } catch (e) {
       console.log(e)
       throw new Error('Something went wrong');

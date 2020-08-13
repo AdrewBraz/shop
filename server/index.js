@@ -10,11 +10,15 @@ import _ from 'lodash';
 import mongoose from 'mongoose';
 import fastifyMongo from 'fastify-mongodb';
 import addRoutes from './routes.js';
-import { allowedNodeEnvironmentFlags } from 'process';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const appPath = path.join(__dirname, '..');
 const isDevelopment = !isProduction;
+const uri = 'mongodb://Mos:KHq.Wd87isFt4XF@ds040167.mlab.com:40167/restik';
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 
 const setUpViews = (app) => {
   const domain = isDevelopment ? 'http://localhost:8080' : '';
@@ -34,10 +38,6 @@ const setUpStaticAssets = (app) => {
     root: path.join(appPath, 'dist/public'),
     prefix: '/assets',
   });
-  app.register(fastifyMongo, {
-    forceClose: true,
-    url: 'mongodb://Mos:KHq.Wd87isFt4XF@ds040167.mlab.com:40167/restik'
-  })
 };
 
 export default (state = {}) => {

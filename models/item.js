@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+mongoose.set('debug', true)
 const { Schema } = mongoose;
 
 const ItemSchema = new Schema({
@@ -10,4 +10,9 @@ const ItemSchema = new Schema({
   status: String,
 });
 
-export default mongoose.model('beer', ItemSchema);
+const models = {
+  'meat': mongoose.model('Meat', ItemSchema),
+  'beer': mongoose.model('Beer', ItemSchema),
+  'fish': mongoose.model('Fish', ItemSchema)
+}
+export default models;

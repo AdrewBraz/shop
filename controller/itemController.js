@@ -1,12 +1,12 @@
-import Item from '../models/item';
+import mongoose from 'mongoose';
+import { parseQuery } from '../src/helpers';
+import models from '../models/item';
 
-exports.getItem = async (id) => {
-  try {
-    const coll = await Item.find({})
-    console.log(coll)
-  }catch(e){
-    console.log(e)
-  }
+exports.getItem = async  (req, reply) => {
+  const id = parseQuery(req.params.id)
+  const model = models[id];
+  const coll = await model.find({})
+  reply.send(coll)
 };
 
 exports.addItem = async (req, reply) => {
