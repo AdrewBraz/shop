@@ -11,8 +11,8 @@ const ItemSchema = new Schema({
 });
 
 const models = {
-  'meat': mongoose.model('Meat', ItemSchema),
-  'beer': mongoose.model('Beer', ItemSchema),
-  'fish': mongoose.model('Fish', ItemSchema)
+  'meat': mongoose.model('Meat', ItemSchema, 'meat'),
+  'beer': mongoose.model('Beer', ItemSchema, 'beer'),
+  'fish': mongoose.model('Fish', ItemSchema, 'fish')
 }
 export default models;

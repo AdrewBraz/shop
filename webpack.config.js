@@ -22,12 +22,8 @@ module.exports = {
 
   module: {
     rules: [
-      // {
-      //     test: /\.styl$/,
-      //     use:  ['style-loader', 'css-loader', 'stylus-loader']
-      // },
       {
-        test: /\.styl$/,
+        test: /\.css$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -37,12 +33,28 @@ module.exports = {
               hmr: isDevelopment,
             },
           },
-          { loader: 'css-loader', options: { sourceMap: isDevelopment } },
-          { loader: 'stylus-loader', options: { sourceMap: isDevelopment } },
+          { loader: 'css-loader', options: { importLoaders: 1, sourceMap: isDevelopment } },
+          { loader: 'postcss-loader', options: { sourceMap: isDevelopment } },
         ],
       },
       {
-        test: /\.js$/,
+        test: /\.(scss|sass)$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              reloadAll: true,
+              sourceMap: isDevelopment,
+              hmr: isDevelopment,
+            },
+          },
+          { loader: 'css-loader', options: { importLoaders: 1, sourceMap: isDevelopment } },
+          { loader: 'postcss-loader', options: { sourceMap: isDevelopment } },
+          { loader: 'sass-loader', options: { sourceMap: isDevelopment } },
+        ],
+      },
+      {
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',

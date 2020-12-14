@@ -5,7 +5,8 @@ const store = createSlice({
     initialState: {},
     reducers: {
         getData(state, { payload }){
-          console.log(payload)
+          state = payload;
+          return state;
         }
     }
 })

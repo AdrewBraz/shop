@@ -4,10 +4,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-import '../assets/css/style.styl';
-import NotFound from './components/NotFound';
+import '../assets/application.scss';
 import App from './components/App';
-import Store from './components/Store';
 import reducers from './reducers';
 
 const store = configureStore({
@@ -20,9 +18,8 @@ const Root = ({ store }) => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={App} />
-        <Route exact path="/store/:id" component={Store} />
       </Switch>
     </BrowserRouter>
   </Provider>
 )}
-render(<Root store={store} />, document.getElementById('main'));
+render( <Root store={store} />, document.getElementById('main'));

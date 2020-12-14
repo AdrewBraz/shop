@@ -1,19 +1,18 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import { Jumbotron, Button } from 'react-bootstrap';
 import axios from 'axios';
 import actions from '../actions';
 
+import AddFileForm from './AddFileForm'
+
 export default (props) => {
+  const dispatch = useDispatch();
   const generateOnSubmit = () => async (values) => {
     const { store } = values;
-    try {
-      const coll = await axios.get(`/store/${store}`).then(res => res, null)
-      console.log(actions.getData)
-    } catch (e) {
-      console.log(e)
-      throw new Error('Something went wrong');
-    }
+    const {data} = await axios.get(`/store/${store}`).then(res => res, null)
+    dispatch(actions.getData(data))
   };
 
   const form = useFormik({
@@ -24,17 +23,18 @@ export default (props) => {
 
 
   return (
-  <form className="store-selector" onChange={form.handleChange} onSubmit={form.handleSubmit} >
-      <h2>Please enter the Store</h2>
-      <select name='store' className="store-select">
-          <option value="catch of the day" type="submit" >Catch Of The Day </option>
-          <option value="beer card" type="submit" >Beer Card </option>
-          <option value="king grill" type="submit" >King Of The Grill </option>
-      </select>
-      <button type="submit" disabled={form.isValidating || form.isSubmitting} className=" btn btn-primary btn-sm">
-        {form.isSubmitting ? "Submiting" : "Submit"}
-      </button>
-  </form>
-    
+    <div>
+      <Jumbotron>
+        <h1>Hello, world!</h1>
+        <p>
+          This is a simple hero unit, a simple jumbotron-style component for calling
+          extra attention to featured content or information.
+        </p>
+        <p>
+          <Button variant="primary">Learn more</Button>
+        </p>
+      </Jumbotron>
+      <AddFileForm />
+    </div>
   );
 };

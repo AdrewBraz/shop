@@ -1,3 +1,3 @@
-import * as actions from '../reducers/store';
+import * as actions from '../reducers/storeSlice';
 
 export default actions;

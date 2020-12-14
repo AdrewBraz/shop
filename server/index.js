@@ -14,7 +14,7 @@ import addRoutes from './routes.js';
 const isProduction = process.env.NODE_ENV === 'production';
 const appPath = path.join(__dirname, '..');
 const isDevelopment = !isProduction;
-const uri = 'mongodb://Mos:KHq.Wd87isFt4XF@ds040167.mlab.com:40167/restik';
+const uri = "mongodb+srv://oms:rknpk6446@cluster0.pm8jq.mongodb.net/oms2?retryWrites=true&w=majority";
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -33,6 +33,10 @@ const setUpViews = (app) => {
   });
 };
 
+const setUpMutlipart = (app) => {
+  app.register(require('fastify-multipart'))
+}
+
 const setUpStaticAssets = (app) => {
   app.register(fastifyStatic, {
     root: path.join(appPath, 'dist/public'),
@@ -45,6 +49,7 @@ export default (state = {}) => {
 
   setUpViews(app);
   setUpStaticAssets(app);
+  setUpMutlipart(app)
   addRoutes(app);
 
   return app;
