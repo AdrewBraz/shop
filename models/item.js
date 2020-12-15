@@ -3,16 +3,17 @@ mongoose.set('debug', true)
 const { Schema } = mongoose;
 
 const ItemSchema = new Schema({
-  name: String,
-  image: String,
-  desc: String,
-  price: Number,
-  status: String,
+  COD: String,
+  NAME: String,
+  PRICE: String,
+  PRICE_D: String,
+  USL: Number,
+  DAYS: Number,
+  NUM_DV: Number,
+  NUM_DOC: Number,
+  NUM_CI: Number,
+  TOTAL_PRICE: String,
+  DATE: Date
 });
 
-const models = {
-  'meat': mongoose.model('Meat', ItemSchema, 'meat'),
-  'beer': mongoose.model('Beer', ItemSchema, 'beer'),
-  'fish': mongoose.model('Fish', ItemSchema, 'fish')
-}
-export default models;
+export default mongoose.model('OMS2', ItemSchema, 'oms2')

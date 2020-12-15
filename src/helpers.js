@@ -25,4 +25,15 @@ const parseQuery = (name) => {
   return q;
 }
 
-export { formatPrice, slugify, getFunName, parseQuery, rando };
+const getList = (start, fn, end) => {
+  const list = [];
+  let interim = start;
+  while(interim < end){
+    list.push(interim);
+    interim = fn(interim, 1)
+  }
+  return list
+}
+
+
+export { formatPrice, slugify, getFunName, parseQuery, rando, getList};

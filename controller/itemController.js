@@ -1,40 +1,40 @@
 import mongoose from 'mongoose';
-import { parseQuery } from '../src/helpers';
-import models from '../models/item';
+import model from '../models/item';
 
-exports.getItem = async  (req, reply) => {
-  const id = parseQuery(req.params.id)
-  const model = models[id];
-  const coll = await model.find({})
+
+exports.getData = async (req, reply) => {
+  const {from, to } = req.body;
+  const fromDate = new Date(from);
+  const toDate = new Date(to);
+  console.log(fromDate, toDate)
+  const coll = await model.aggregate([
+    {
+      '$match': {
+        'DATE': {
+          '$gte': new Date('Sun, 31 Dec 2017 21:00:00 GMT'), 
+          '$lte': new Date('Mon, 01 Jan 2018 21:00:00 GMT')
+        }
+      }
+    }, {
+      '$group': {
+        '_id': {
+          'COD': '$COD', 
+          'NAME': '$NAME'
+        }, 
+        'USL': {
+          '$sum': '$USL'
+        }, 
+        'TOTAL_PRICE': {
+          '$sum': '$TOTAL_PRICE'
+        }
+      }
+    }
+  ]);
+  coll.map(item => {
+    if(item["TOTAL_PRICE"]){
+      item["TOTAL_PRICE"] = item["TOTAL_PRICE"].toString()
+    }
+  })
+  console.log(coll)
   reply.send(coll)
-};
-
-exports.addItem = async (req, reply) => {
-  try {
-    const { body } = req;
-    const item = new Item(body);
-    return item.save();
-  } catch (err) {
-    throw new Error(err);
-  }
-};
-
-exports.updateItem = async (req, reply) => {
-  try {
-    const { id } = req.params;
-    const coll = await Item.findOneAndRemove(id);
-    return coll;
-  } catch (err) {
-    throw new Error(err);
-  }
-};
-
-exports.deleteItem = async (req, reply) => {
-  try {
-    const { id } = req.params;
-    const coll = await Item.findOneAndRemove(id);
-    return coll;
-  } catch (err) {
-    throw new Error(err);
-  }
 };
