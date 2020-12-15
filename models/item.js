@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-mongoose.set('debug', true)
+
+mongoose.set('debug', true);
 const { Schema } = mongoose;
 
 const ItemSchema = new Schema({
@@ -13,7 +14,7 @@ const ItemSchema = new Schema({
   NUM_DOC: Number,
   NUM_CI: Number,
   TOTAL_PRICE: String,
-  DATE: Date
+  DATE: Date,
 });
 
-export default mongoose.model('OMS2', ItemSchema, 'oms2')
+export default mongoose.model('OMS2', ItemSchema, 'oms2');

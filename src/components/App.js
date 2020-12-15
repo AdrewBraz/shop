@@ -5,14 +5,14 @@ import { Jumbotron, Button } from 'react-bootstrap';
 import axios from 'axios';
 import actions from '../actions';
 
-import AddFileForm from './AddFileForm'
+import AddFileForm from './AddFileForm';
 
 export default (props) => {
   const dispatch = useDispatch();
   const generateOnSubmit = () => async (values) => {
     const { store } = values;
-    const {data} = await axios.get(`/store/${store}`).then(res => res, null)
-    dispatch(actions.getData(data))
+    const { data } = await axios.get(`/store/${store}`).then((res) => res, null);
+    dispatch(actions.getData(data));
   };
 
   const form = useFormik({
@@ -20,7 +20,6 @@ export default (props) => {
     initialValues: { store: 'catch of the day' },
     validateOnBlur: false,
   });
-
 
   return (
     <div>

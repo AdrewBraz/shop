@@ -12,8 +12,7 @@ const store = configureStore({
   reducer: reducers,
 });
 
-const Root = ({ store }) => {
-  return (
+const Root = ({ store }) => (
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
@@ -21,5 +20,5 @@ const Root = ({ store }) => {
       </Switch>
     </BrowserRouter>
   </Provider>
-)}
-render( <Root store={store} />, document.getElementById('main'));
+);
+render(<Root store={store} />, document.getElementById('main'));
