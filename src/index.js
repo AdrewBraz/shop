@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
@@ -12,7 +12,6 @@ import Report from './components/Report';
 const store = configureStore({
   reducer: reducers,
 });
-
 
 const Root = ({ store }) => (
   <Provider store={store}>

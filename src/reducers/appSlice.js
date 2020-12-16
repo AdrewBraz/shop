@@ -4,15 +4,15 @@ const app = createSlice({
   name: 'app',
   initialState: {},
   reducers: {
-    modalStateOpen(state){
-        state.modal = 'open'
+    modalStateOpen(state) {
+      state.modal = 'open';
     },
-    modalStateClose(state){
-        state.modal = 'close'
+    modalStateClose(state) {
+      state.modal = 'close';
     },
-    stateURL(state, {payload}){
-        state.url = payload
-    }
+    stateURL(state, { payload }) {
+      state.url = payload;
+    },
   },
 });
 

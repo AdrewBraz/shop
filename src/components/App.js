@@ -1,17 +1,16 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Jumbotron, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import actions from '../actions';
-import { Link } from 'react-router-dom'
 
 export default (props) => {
   const dispatch = useDispatch();
-  const { modal } = useSelector(({app}) => app);
+  const { modal } = useSelector(({ app }) => app);
 
   const handleOpenModal = () => {
-    dispatch(actions.modalStateOpen)
-  }
-  
+    dispatch(actions.modalStateOpen);
+  };
 
   return (
     <div>

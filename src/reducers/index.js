@@ -4,5 +4,5 @@ import app from './appSlice';
 
 export default combineReducers({
   store,
-  app
+  app,
 });

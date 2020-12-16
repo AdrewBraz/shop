@@ -4,10 +4,10 @@ const store = createSlice({
   name: 'store',
   initialState: {},
   reducers: {
-    fetchData(state, { payload }){
-      console.log(payload)
+    fetchData(state, { payload }) {
+      console.log(payload);
       state.groupedData = payload;
-    }
+    },
   },
 });
 

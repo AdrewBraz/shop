@@ -1,5 +1,4 @@
-import { getData } from '../controller/itemController'
-
+import { getData } from '../controller/itemController';
 
 export default (router, str) => router
   .get('/', (_req, reply) => {
@@ -8,6 +7,6 @@ export default (router, str) => router
   .get('/*', (_req, reply) => {
     reply.redirect('/');
   })
-  .post('/oms2', async(req, reply) => {
-    await getData(req, reply)
-  })
+  .post('/oms2', async (req, reply) => {
+    await getData(req, reply);
+  });
