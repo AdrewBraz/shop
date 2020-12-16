@@ -1,11 +1,13 @@
-import { getData } from '../controller/itemController';
+import { getData } from '../controller/itemController'
+
 
 export default (router, str) => router
   .get('/', (_req, reply) => {
     reply.view('index.pug');
   })
-  .post('/', async (req, reply) => {
-    console.log(req.body);
-    getData(req, reply);
-    reply.send();
-  });
+  .get('/*', (_req, reply) => {
+    reply.redirect('/');
+  })
+  .post('/oms2', async(req, reply) => {
+    await getData(req, reply)
+  })

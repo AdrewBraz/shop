@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const store = createSlice({
-  name: 'currentStore',
+  name: 'store',
   initialState: {},
   reducers: {
-    getData(state, { payload }) {
-      state = payload;
-      return state;
-    },
+    fetchData(state, { payload }){
+      console.log(payload)
+      state.groupedData = payload;
+    }
   },
 });
 
-export const { getData } = store.actions;
+export const { fetchData } = store.actions;
 
 export default store.reducer;

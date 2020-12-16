@@ -1,3 +1,9 @@
-import * as actions from '../reducers/storeSlice';
+import { fetchData } from '../reducers/storeSlice';
+import { modalStateOpen, modalStateClose, stateURL } from '../reducers/appSlice';
 
-export default actions;
+export default {
+    fetchData,
+    modalStateOpen, 
+    modalStateClose, 
+    stateURL
+};

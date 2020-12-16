@@ -3,17 +3,26 @@ import React from 'react';
 import { addMonths, addYears, format } from 'date-fns';
 import axios from 'axios';
 import { getList } from '../helpers';
+import { useDispatch } from 'react-redux'
+import actions from '../actions';
+import { useLocation } from 'react-router-dom';
 
 export default () => {
+  const dispatch = useDispatch();
+  const location = useLocation()
   const generateOnSubmit = () => async (values) => {
-    const data = {
+    const dates = {
       from: `${values.fromYear}-${values.fromMonth}`,
       to: `${values.toYear}-${values.toMonth}`,
     };
-    console.log(values);
-    axios.post('/', data)
-      .then(() => console.log('success'))
+    const result = await axios.post(`${location.pathname}`, dates)
+      .then(({data}) => {
+          console.log('success')
+          return data
+        })
       .catch(() => console.log('failure'));
+      console.log(result)
+    dispatch(actions.fetchData(result))
   };
 
   const listOfYears = getList(new Date(2017, 12, 1), addYears, new Date(2020, 1, 1));
