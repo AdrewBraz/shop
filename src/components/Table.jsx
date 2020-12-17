@@ -1,9 +1,9 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
 
-export default () => {
-  const list = useSelector(({ store }) => store.groupedData);
+
+export default (props) => {
+  const {groupedCodes, total} = props;
 
   const renderPatients = (list) => {
     const columnNames = Object.keys(list[0]);
@@ -25,12 +25,13 @@ export default () => {
           </tr>
         </thead>
         <tbody>
-          {renderPatients(list)}
+          {renderPatients(groupedCodes)}
+          {renderPatients(total)}
         </tbody>
       </Table>
     );
   };
   return (
-    <div>{list === undefined ? null : renderTable(list)}</div>
+    <div>{groupedCodes === undefined ? null : renderTable(groupedCodes)}</div>
   );
 };

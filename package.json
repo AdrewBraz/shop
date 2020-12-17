@@ -47,6 +47,7 @@
     "date-fns": "^2.13.0",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
+    "exceljs": "^4.2.0",
     "faker": "^4.1.0",
     "fastify": "^2.14.1",
     "fastify-formbody": "^3.2.0",

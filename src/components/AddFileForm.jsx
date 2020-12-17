@@ -21,7 +21,6 @@ export default () => {
         return data;
       })
       .catch(() => console.log('failure'));
-    console.log(result);
     dispatch(actions.fetchData(result));
   };
 
@@ -35,40 +34,45 @@ export default () => {
   });
 
   return (
-    <form action="/" id="dates" className="form-inline mb-3" method="post" onSubmit={form.handleSubmit}>
-      <div className="form-group flex-row w-100">
-        <div className="form-group">
-          <label htmlFor="yearFrom">choose from year</label>
-          <select name="fromYear" id="yearFrom" onChange={form.handleChange}>
-            <option value="">Select year</option>
-            {listOfYears.map((year) => <option key={`${year}`} value={`${format(year, 'yyyy')}`}>{format(year, 'yyyy')}</option>)}
-          </select>
-          <label htmlFor="monthFrom">choose from month</label>
-          <select name="fromMonth" id="monthFrom" onChange={form.handleChange}>
-            <option value="">Select month</option>
-            {listOfMonths.map((month) => <option key={`${month}`} value={`${format(month, 'MM-dd')}`}>{format(month, 'MMMM')}</option>)}
-          </select>
-        </div>
-        <div>
+    <>
+      <form action="/" id="dates" className="form-inline mb-3" method="post" onSubmit={form.handleSubmit}>
+        <div className="form-group flex-row w-100">
           <div className="form-group">
-            <label htmlFor="yearTo">choose from year</label>
-            <select name="toYear" id="yearTo" onChange={form.handleChange}>
+            <label htmlFor="yearFrom">choose from year</label>
+            <select name="fromYear" id="yearFrom" onChange={form.handleChange}>
               <option value="">Select year</option>
               {listOfYears.map((year) => <option key={`${year}`} value={`${format(year, 'yyyy')}`}>{format(year, 'yyyy')}</option>)}
             </select>
-            <label htmlFor="monthTo">choose from month</label>
-            <select name="toMonth" id="monthTo" onChange={form.handleChange}>
+            <label htmlFor="monthFrom">choose from month</label>
+            <select name="fromMonth" id="monthFrom" onChange={form.handleChange}>
               <option value="">Select month</option>
               {listOfMonths.map((month) => <option key={`${month}`} value={`${format(month, 'MM-dd')}`}>{format(month, 'MMMM')}</option>)}
             </select>
           </div>
+          <div>
+            <div className="form-group">
+              <label htmlFor="yearTo">choose from year</label>
+              <select name="toYear" id="yearTo" onChange={form.handleChange}>
+                <option value="">Select year</option>
+                {listOfYears.map((year) => <option key={`${year}`} value={`${format(year, 'yyyy')}`}>{format(year, 'yyyy')}</option>)}
+              </select>
+              <label htmlFor="monthTo">choose from month</label>
+              <select name="toMonth" id="monthTo" onChange={form.handleChange}>
+                <option value="">Select month</option>
+                {listOfMonths.map((month) => <option key={`${month}`} value={`${format(month, 'MM-dd')}`}>{format(month, 'MMMM')}</option>)}
+              </select>
+            </div>
+          </div>
+          <div className="input-group-prepend">
+            <button type="submit" className=" btn btn-primary btn-sm">
+              Submit
+            </button>
+          </div>
         </div>
-        <div className="input-group-prepend">
-          <button type="submit" className=" btn btn-primary btn-sm">
-            Submit
-          </button>
-        </div>
-      </div>
-    </form>
+      </form>
+      <form action="/excel" method='post' encType='multipart/form-data'>
+        <button>click</button>
+      </form>
+    </>
   );
 };
