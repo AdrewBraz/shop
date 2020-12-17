@@ -24,6 +24,10 @@ export default () => {
     dispatch(actions.fetchData(result));
   };
 
+  const handleClick = async () => {
+    await axios.get('/download').then((data) => data);
+  };
+
   const listOfYears = getList(new Date(2017, 12, 1), addYears, new Date(2020, 1, 1));
   const listOfMonths = getList(new Date(2017, 12, 1), addMonths, new Date(2018, 12, 1));
 
@@ -70,9 +74,7 @@ export default () => {
           </div>
         </div>
       </form>
-      <form action="/excel" method='post' encType='multipart/form-data'>
-        <button>click</button>
-      </form>
+      <a onClick={(e) => { handleClick(); }} href="/download" download>click</a>
     </>
   );
 };

@@ -2,12 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const store = createSlice({
   name: 'store',
-  initialState: {vmp:[], groupedCodes: [], total: []},
+  initialState: { vmp: [], groupedCodes: [], total: [] },
   reducers: {
-    fetchData(state, { payload: { groupedCodes, total, vmp} }) {
+    fetchData(state, { payload: { groupedCodes, total, vmp } }) {
       state.groupedCodes = groupedCodes;
       state.total = total;
-      state.vmp = vmp
+      state.vmp = vmp;
     },
   },
 });

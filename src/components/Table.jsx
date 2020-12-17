@@ -1,9 +1,8 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 
-
 export default (props) => {
-  const {groupedCodes, total} = props;
+  const { groupedCodes, total } = props;
 
   const renderPatients = (list) => {
     const columnNames = Object.keys(list[0]);
