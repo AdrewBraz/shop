@@ -15,7 +15,11 @@ exports.getData = async (req, reply) => {
         },
         { $addFields: { COD: { $toInt: '$_id.COD' }, NAME: '$_id.NAME', TOTAL_PRICE: { $toString: '$TOTAL_PRICE' } } },
         { $sort: { COD: 1 } },
-        { $project: { _id: 0 , COD: '$COD', NAME: '$NAME', USL: '$USL', NUM_DV: '$NUM_DV', NUM_DOC: '$NUM_DOC', NUM_CI: '$NUM_CI', TOTAL_PRICE: '$TOTAL_PRICE' }},
+        {
+          $project: {
+            _id: 0, COD: '$COD', NAME: '$NAME', USL: '$USL', NUM_DV: '$NUM_DV', NUM_DOC: '$NUM_DOC', NUM_CI: '$NUM_CI', TOTAL_PRICE: '$TOTAL_PRICE',
+          },
+        },
       ],
       total: [
         { $match: { DATE: { $gte: new Date(from), $lte: new Date(to) } } },
@@ -26,7 +30,11 @@ exports.getData = async (req, reply) => {
         },
         { $addFields: { TOTAL_PRICE: { $toString: '$TOTAL_PRICE' } } },
         { $set: { COD: null, NAME: null } },
-        { $project: { _id: 0 , COD: '$COD', NAME: '$NAME', USL: '$USL', NUM_DV: '$NUM_DV', NUM_DOC: '$NUM_DOC', NUM_CI: '$NUM_CI', TOTAL_PRICE: '$TOTAL_PRICE' }},
+        {
+          $project: {
+            _id: 0, COD: '$COD', NAME: '$NAME', USL: '$USL', NUM_DV: '$NUM_DV', NUM_DOC: '$NUM_DOC', NUM_CI: '$NUM_CI', TOTAL_PRICE: '$TOTAL_PRICE',
+          },
+        },
       ],
       vmp: [
         { $match: { DATE: { $gte: new Date(from), $lte: new Date(to) }, COD: { $regex: '^200' } } },
@@ -41,7 +49,7 @@ exports.getData = async (req, reply) => {
   }]);
   const { groupedCodes, total, vmp } = coll[0];
 
-  await excelController({from,to}, {groupedCodes})
+  await excelController({ from, to }, { groupedCodes });
 
   reply.send({ groupedCodes, total, vmp });
 };

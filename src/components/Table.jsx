@@ -17,7 +17,7 @@ export default (props) => {
   const renderTable = (list) => {
     const columnNames = Object.keys(list[0]);
     return (
-      <Table striped bordered hover responsive>
+      <Table size="sm" striped bordered hover responsive>
         <thead>
           <tr>
             {columnNames.map((name) => <th key={name}>{name}</th>)}

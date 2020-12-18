@@ -6,7 +6,6 @@ export default (router) => router
     reply.view('index.pug');
   })
   .get('/download', async (_req, reply) => {
-
     const file = fs.readFileSync(`${__dirname}/export.xlsx`);
     const stat = fs.statSync(`${__dirname}/export.xlsx`);
     reply.header('Content-Length', stat.size);
