@@ -1,3 +1,4 @@
+// @ts-check
 import { useFormik } from 'formik';
 import React from 'react';
 import { format } from 'date-fns';
@@ -9,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import validationSchema from '../validationSchema';
 import { listOfMonths, listOfYears, formatter } from '../../helpers';
-import * as actions from '../actions/index.js';
+import actions from '../actions/index.js';
 
 const AddFileForm = () => {
   const dispatch = useDispatch();
@@ -21,10 +22,7 @@ const AddFileForm = () => {
       to: `${values.toYear}-${values.toMonth}`,
     };
     const result = await axios.post(`${location.pathname}`, dates)
-      .then(({ data }) => {
-        console.log('success');
-        return data;
-      })
+      .then(({ data }) => data)
       .catch(() => console.log('failure'));
     dispatch(actions.fetchData(result));
   };
