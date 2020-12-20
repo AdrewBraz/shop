@@ -1,14 +1,10 @@
 // @ts-check
-
 import path from 'path';
 import Pug from 'pug';
 import fastify from 'fastify';
 import pointOfView from 'point-of-view';
 import fastifyStatic from 'fastify-static';
-import fastifySession from 'fastify-session';
-import _ from 'lodash';
 import mongoose from 'mongoose';
-import fastifyMongo from 'fastify-mongodb';
 import addRoutes from './routes.js';
 
 const isProduction = process.env.NODE_ENV === 'production';

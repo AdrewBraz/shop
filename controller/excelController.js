@@ -1,36 +1,46 @@
 import ExcelJS from 'exceljs';
 import path from 'path';
+import { parseISO, format } from 'date-fns';
 import { ruNames } from '../src/helpers';
 
 export default async (dates, { groupedCodes }) => {
+  groupedCodes.forEach((item) => {
+    item.TOTAL_PRICE = +item.TOTAL_PRICE;
+  });
+
   const keys = Object.keys(ruNames);
+  const { from, to } = dates;
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Омс 2');
   worksheet.headerFooter.differentFirst = true;
   worksheet.headerFooter.firstHeader = 'sdsdfasdfasdf';
-  const columns = keys.map((key) => ({ name: ruNames[key], filterButton: true }));
-  console.log(columns)
+  const columns = keys.map((key) => (
+    { name: ruNames[key], filterButton: true, style: { width: 15 } }));
+  worksheet.mergeCells('A1:C1');
+  worksheet.mergeCells('D1:F1');
+  worksheet.getCell('A1').value = `Отчет за период с ${format(parseISO(from), 'dd-MM-yyyy')}`;
+  worksheet.getCell('D1').value = `по ${format(parseISO(to), 'dd-MM-yyyy')}`;
   worksheet.addTable({
     name: 'MyTable',
-    ref: 'A1',
+    ref: 'A3',
     headerRow: true,
     totalsRow: true,
     displayName: 'medgroup',
     style: {
-      theme: 'TableStyleMedium1',
+      theme: 'TableStyleLight19',
       showRowStripes: true,
     },
     columns,
     rows: groupedCodes.map((item) => Object.values(item)),
   });
-  worksheet.getCell('A1').alignment = { wrapText: true };
-  worksheet.getCell('B1').alignment = { wrapText: true };
-  worksheet.getCell('C1').alignment = { wrapText: true };
-  worksheet.getCell('D1').alignment = { wrapText: true };
-  worksheet.getCell('E1').alignment = { wrapText: true }
-  worksheet.getCell('F1').alignment = { wrapText: true }
-  worksheet.getCell('G1').alignment = { wrapText: true }
-  worksheet.getCell('H1').alignment = { wrapText: true }
+  worksheet.getCell('A3').alignment = { wrapText: true };
+  worksheet.getCell('B3').alignment = { wrapText: true };
+  worksheet.getCell('C3').alignment = { wrapText: true };
+  worksheet.getCell('D3').alignment = { wrapText: true };
+  worksheet.getCell('E3').alignment = { wrapText: true };
+  worksheet.getCell('F3').alignment = { wrapText: true };
+  worksheet.getCell('G3').alignment = { wrapText: true };
+  worksheet.getCell('H3').alignment = { wrapText: true };
   await workbook
     .xlsx
     .writeFile(path.join(__dirname, '../server/export.xlsx'))

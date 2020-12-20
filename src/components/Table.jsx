@@ -4,34 +4,35 @@ import { ruNames } from '../helpers';
 
 const TableOms = (props) => {
   const { groupedCodes, total } = props;
-  const renderPatients = (list) => {
+  const renderItems = (list) => {
     const columnNames = Object.keys(ruNames);
     return (
-      list.map((item, i) => (
-        <tr key={i}>
+      list.map((item) => (
+        <tr key={item.NAME + item.TOTAL_PRICE}>
           {columnNames.map((name, j) => <td key={`${name + j}`}>{item[name]}</td>)}
         </tr>
       ))
     );
   };
+  const style = { overflow: 'auto', height: '60vh' };
   const renderTable = (list) => {
     const columnNames = Object.keys(list[0]);
     return (
-      <Table size="sm" striped bordered hover responsive>
+      <Table style={{ position: 'relative' }} size="sm" striped bordered hover responsive>
         <thead>
           <tr>
-            {columnNames.map((name) => <th key={name}>{ruNames[name]}</th>)}
+            {columnNames.map((name) => <th style={{ position: 'sticky', top: '0' }} key={name}>{ruNames[name]}</th>)}
           </tr>
         </thead>
         <tbody>
-          {renderPatients(groupedCodes)}
-          {renderPatients(total)}
+          {renderItems(groupedCodes)}
+          {renderItems(total)}
         </tbody>
       </Table>
     );
   };
   return (
-    <div>{groupedCodes === undefined ? null : renderTable(groupedCodes)}</div>
+    <div style={style}>{groupedCodes === undefined ? null : renderTable(groupedCodes)}</div>
   );
 };
 

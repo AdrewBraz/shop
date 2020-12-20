@@ -11,7 +11,7 @@ import validationSchema from '../validationSchema';
 import { listOfMonths, listOfYears, formatter } from '../helpers';
 import actions from '../actions';
 
-export default () => {
+const AddFileForm = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { groupedCodes } = useSelector(({ store }) => store);
@@ -37,7 +37,7 @@ export default () => {
       toMonth: '',
       toYear: '',
     },
-    initialErrors: {fromMonth: 'is empty'},
+    initialErrors: { fromMonth: 'is empty' },
     validationSchema,
     validateOnChange: true,
   });
@@ -79,17 +79,18 @@ export default () => {
               {form.isSubmitting ? <Spinner animation="border" /> : 'Запрос'}
             </button>
           </div>
-          <div className="col-md-2">
-            { groupedCodes.length <= 0 ? null : (
+          { groupedCodes.length <= 0 ? null : (
+            <div className="col-md-2">
               <a download href="/download" className="btn btn-success" role="button">
                 <FontAwesomeIcon icon={faFileExcel} />
-                }
               </a>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
       </form>
     </>
   );
 };
+
+export default AddFileForm;

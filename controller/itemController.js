@@ -13,7 +13,11 @@ exports.getData = async (req, reply) => {
             _id: { COD: '$COD', NAME: '$NAME', TYPE: '$TYPE' }, USL: { $sum: '$USL' }, NUM_DV: { $sum: '$NUM_DV' }, NUM_DOC: { $sum: '$NUM_DOC' }, NUM_CI: { $sum: '$NUM_CI' }, TOTAL_PRICE: { $sum: '$TOTAL_PRICE' },
           },
         },
-        { $addFields: { COD: { $toInt: '$_id.COD' }, NAME: '$_id.NAME', TYPE: '$_id.TYPE', TOTAL_PRICE: { $toString: '$TOTAL_PRICE' } } },
+        {
+          $addFields: {
+            COD: { $toInt: '$_id.COD' }, NAME: '$_id.NAME', TYPE: '$_id.TYPE', TOTAL_PRICE: { $toString: '$TOTAL_PRICE' },
+          },
+        },
         { $sort: { COD: 1 } },
         {
           $project: {
@@ -23,9 +27,9 @@ exports.getData = async (req, reply) => {
       ],
       total: [
         { $match: { DATE: { $gte: new Date(from), $lte: new Date(to) } } },
-        { 
+        {
           $group: {
-            _id: null, USL: { $sum: '$USL' }, NUM_DV: { $sum: '$NUM_DV' }, NUM_DOC: { $sum: '$NUM_DOC' }, NUM_CI: { $sum: '$NUM_CI' }, TOTAL_PRICE: { $sum: '$TOTAL_PRICE' }, COD: { $sum: '$COD' }, NAME: { $sum: '$NAME' }, TYPE: { $sum: '$TYPE'}
+            _id: null, USL: { $sum: '$USL' }, NUM_DV: { $sum: '$NUM_DV' }, NUM_DOC: { $sum: '$NUM_DOC' }, NUM_CI: { $sum: '$NUM_CI' }, TOTAL_PRICE: { $sum: '$TOTAL_PRICE' }, COD: { $sum: '$COD' }, NAME: { $sum: '$NAME' }, TYPE: { $sum: '$TYPE' },
           },
         },
         { $addFields: { TOTAL_PRICE: { $toString: '$TOTAL_PRICE' } } },
