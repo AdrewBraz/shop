@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { ruNames } from '../helpers';
+import { ruNames } from '../../helpers';
 
 const TableOms = (props) => {
   const { groupedCodes, total } = props;
