@@ -1,15 +1,15 @@
 import ExcelJS from 'exceljs';
-import fs from 'fs';
 import path from 'path';
+import { ruNames } from '../src/helpers';
 
 export default async (dates, { groupedCodes }) => {
-  const keys = Object.keys(groupedCodes[0]);
-  console.log(keys);
+  const keys = Object.keys(ruNames);
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Омс 2');
   worksheet.headerFooter.differentFirst = true;
   worksheet.headerFooter.firstHeader = 'sdsdfasdfasdf';
-  const columns = keys.map((key) => ({ name: key, filterButton: true }));
+  const columns = keys.map((key) => ({ name: ruNames[key], filterButton: true }));
+  console.log(columns)
   worksheet.addTable({
     name: 'MyTable',
     ref: 'A1',
@@ -23,9 +23,14 @@ export default async (dates, { groupedCodes }) => {
     columns,
     rows: groupedCodes.map((item) => Object.values(item)),
   });
-  // Add row using key mapping to columns
-  console.log(columns);
-  // save workbook to disk
+  worksheet.getCell('A1').alignment = { wrapText: true };
+  worksheet.getCell('B1').alignment = { wrapText: true };
+  worksheet.getCell('C1').alignment = { wrapText: true };
+  worksheet.getCell('D1').alignment = { wrapText: true };
+  worksheet.getCell('E1').alignment = { wrapText: true }
+  worksheet.getCell('F1').alignment = { wrapText: true }
+  worksheet.getCell('G1').alignment = { wrapText: true }
+  worksheet.getCell('H1').alignment = { wrapText: true }
   await workbook
     .xlsx
     .writeFile(path.join(__dirname, '../server/export.xlsx'))

@@ -10,29 +10,29 @@ exports.getData = async (req, reply) => {
         { $match: { DATE: { $gte: new Date(from), $lte: new Date(to) } } },
         {
           $group: {
-            _id: { COD: '$COD', NAME: '$NAME' }, USL: { $sum: '$USL' }, NUM_DV: { $sum: '$NUM_DV' }, NUM_DOC: { $sum: '$NUM_DOC' }, NUM_CI: { $sum: '$NUM_CI' }, TOTAL_PRICE: { $sum: '$TOTAL_PRICE' },
+            _id: { COD: '$COD', NAME: '$NAME', TYPE: '$TYPE' }, USL: { $sum: '$USL' }, NUM_DV: { $sum: '$NUM_DV' }, NUM_DOC: { $sum: '$NUM_DOC' }, NUM_CI: { $sum: '$NUM_CI' }, TOTAL_PRICE: { $sum: '$TOTAL_PRICE' },
           },
         },
-        { $addFields: { COD: { $toInt: '$_id.COD' }, NAME: '$_id.NAME', TOTAL_PRICE: { $toString: '$TOTAL_PRICE' } } },
+        { $addFields: { COD: { $toInt: '$_id.COD' }, NAME: '$_id.NAME', TYPE: '$_id.TYPE', TOTAL_PRICE: { $toString: '$TOTAL_PRICE' } } },
         { $sort: { COD: 1 } },
         {
           $project: {
-            _id: 0, COD: '$COD', NAME: '$NAME', USL: '$USL', NUM_DV: '$NUM_DV', NUM_DOC: '$NUM_DOC', NUM_CI: '$NUM_CI', TOTAL_PRICE: '$TOTAL_PRICE',
+            _id: 0, COD: '$COD', NAME: '$NAME', TYPE: '$_id.TYPE', USL: '$USL', NUM_DV: '$NUM_DV', NUM_DOC: '$NUM_DOC', NUM_CI: '$NUM_CI', TOTAL_PRICE: '$TOTAL_PRICE',
           },
         },
       ],
       total: [
         { $match: { DATE: { $gte: new Date(from), $lte: new Date(to) } } },
-        {
+        { 
           $group: {
-            _id: null, USL: { $sum: '$USL' }, NUM_DV: { $sum: '$NUM_DV' }, NUM_DOC: { $sum: '$NUM_DOC' }, NUM_CI: { $sum: '$NUM_CI' }, TOTAL_PRICE: { $sum: '$TOTAL_PRICE' }, COD: { $sum: '$COD' }, NAME: { $sum: '$NAME' },
+            _id: null, USL: { $sum: '$USL' }, NUM_DV: { $sum: '$NUM_DV' }, NUM_DOC: { $sum: '$NUM_DOC' }, NUM_CI: { $sum: '$NUM_CI' }, TOTAL_PRICE: { $sum: '$TOTAL_PRICE' }, COD: { $sum: '$COD' }, NAME: { $sum: '$NAME' }, TYPE: { $sum: '$TYPE'}
           },
         },
         { $addFields: { TOTAL_PRICE: { $toString: '$TOTAL_PRICE' } } },
-        { $set: { COD: null, NAME: null } },
+        { $set: { COD: 'Итого', NAME: 'За период', TYPE: '-' } },
         {
           $project: {
-            _id: 0, COD: '$COD', NAME: '$NAME', USL: '$USL', NUM_DV: '$NUM_DV', NUM_DOC: '$NUM_DOC', NUM_CI: '$NUM_CI', TOTAL_PRICE: '$TOTAL_PRICE',
+            _id: 0, COD: '$COD', NAME: '$NAME', TYPE: '$_id.TYPE', USL: '$USL', NUM_DV: '$NUM_DV', NUM_DOC: '$NUM_DOC', NUM_CI: '$NUM_CI', TOTAL_PRICE: '$TOTAL_PRICE',
           },
         },
       ],

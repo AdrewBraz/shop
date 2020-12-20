@@ -1,13 +1,14 @@
 import { useFormik } from 'formik';
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import { format } from 'date-fns';
 import axios from 'axios';
-import cn from 'classnames';
+import { Spinner } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import validationSchema from '../validationSchema';
-import { listOfMonths, listOfYears } from '../helpers';
+import { listOfMonths, listOfYears, formatter } from '../helpers';
 import actions from '../actions';
 
 export default () => {
@@ -15,7 +16,6 @@ export default () => {
   const location = useLocation();
   const { groupedCodes } = useSelector(({ store }) => store);
   const generateOnSubmit = () => async (values) => {
-    console.log(values);
     const dates = {
       from: `${values.fromYear}-${values.fromMonth}`,
       to: `${values.toYear}-${values.toMonth}`,
@@ -32,8 +32,14 @@ export default () => {
   const form = useFormik({
     onSubmit: generateOnSubmit(),
     initialValues: {
+      fromMonth: '',
+      fromYear: '',
+      toMonth: '',
+      toYear: '',
     },
+    initialErrors: {fromMonth: 'is empty'},
     validationSchema,
+    validateOnChange: true,
   });
 
   return (
@@ -51,7 +57,7 @@ export default () => {
             <label htmlFor="monthFrom">Начало периода</label>
             <select className="form-control" name="fromMonth" id="monthFrom" onChange={form.handleChange}>
               <option value="">Выберите месяц</option>
-              {listOfMonths.map((month) => <option key={`${month}`} value={`${format(month, 'MM-dd')}`}>{format(month, 'MMMM')}</option>)}
+              {listOfMonths.map((month) => <option key={`${month}`} value={`${format(month, 'MM-dd')}`}>{formatter(month)}</option>)}
             </select>
           </div>
           <div className="form-group col-md-2">
@@ -65,16 +71,21 @@ export default () => {
             <label htmlFor="monthTo">Конец периода</label>
             <select className="form-control" name="toMonth" id="monthTo" onChange={form.handleChange}>
               <option value="">Выберите месяц</option>
-              {listOfMonths.map((month) => <option key={`${month}`} value={`${format(month, 'MM-dd')}`}>{format(month, 'MMMM')}</option>)}
+              {listOfMonths.map((month) => <option key={`${month}`} value={`${format(month, 'MM-dd')}`}>{formatter(month)}</option>)}
             </select>
           </div>
           <div className="input-group-prepend col-md-2">
-            <button disabled={form.isValidating || form.isSubmitting} type="submit" className=" btn btn-primary btn-sm">
-              Запрос
+            <button disabled={!form.isValid || form.isSubmitting} type="submit" className=" btn btn-primary btn-sm">
+              {form.isSubmitting ? <Spinner animation="border" /> : 'Запрос'}
             </button>
           </div>
           <div className="col-md-2">
-            { groupedCodes.length <= 0 ? null : <a download href="/download" className="btn btn-success" role="button">Экспорт в xlsx</a>}
+            { groupedCodes.length <= 0 ? null : (
+              <a download href="/download" className="btn btn-success" role="button">
+                <FontAwesomeIcon icon={faFileExcel} />
+                }
+              </a>
+            )}
           </div>
         </div>
 

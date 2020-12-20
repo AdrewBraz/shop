@@ -1,11 +1,11 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import { ruNames } from '../helpers';
 
-export default (props) => {
+const TableOms = (props) => {
   const { groupedCodes, total } = props;
-
   const renderPatients = (list) => {
-    const columnNames = Object.keys(list[0]);
+    const columnNames = Object.keys(ruNames);
     return (
       list.map((item, i) => (
         <tr key={i}>
@@ -20,7 +20,7 @@ export default (props) => {
       <Table size="sm" striped bordered hover responsive>
         <thead>
           <tr>
-            {columnNames.map((name) => <th key={name}>{name}</th>)}
+            {columnNames.map((name) => <th key={name}>{ruNames[name]}</th>)}
           </tr>
         </thead>
         <tbody>
@@ -34,3 +34,5 @@ export default (props) => {
     <div>{groupedCodes === undefined ? null : renderTable(groupedCodes)}</div>
   );
 };
+
+export default TableOms;
