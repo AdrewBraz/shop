@@ -1,7 +1,7 @@
 import ExcelJS from 'exceljs';
 import path from 'path';
 import { parseISO, format } from 'date-fns';
-import { ruNames } from '../src/helpers';
+import { ruNames } from '../helpers';
 
 export default async (dates, { groupedCodes }) => {
   groupedCodes.forEach((item) => {

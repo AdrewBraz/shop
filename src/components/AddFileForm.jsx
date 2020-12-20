@@ -8,7 +8,7 @@ import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import validationSchema from '../validationSchema';
-import { listOfMonths, listOfYears, formatter } from '../helpers';
+import { listOfMonths, listOfYears, formatter } from '../../helpers';
 import actions from '../actions/index';
 
 const AddFileForm = () => {
