@@ -1,5 +1,5 @@
 {
-  "name": "cotd",
+  "name": "oms",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
@@ -7,7 +7,8 @@
     "app": "dist/bin/app.js"
   },
   "engines": {
-    "node": "9"
+    "node": "11",
+    "npm": "6"
   },
   "scripts": {
     "test": "jest",
