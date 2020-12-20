@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import actions from '../actions';
 import validationSchema from '../validationSchema';
 import { listOfMonths, listOfYears, formatter } from '../../helpers';
-import actions from '../actions/index.js';
 
 const AddFileForm = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const AddFileForm = () => {
     };
     const result = await axios.post(`${location.pathname}`, dates)
       .then(({ data }) => data)
-      .catch(() => console.log('failure'));
+      .catch(() => new Error('new error'));
     dispatch(actions.fetchData(result));
   };
 
