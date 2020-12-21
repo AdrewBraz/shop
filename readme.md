@@ -8,4 +8,4 @@
 * Webpack
 * Express
 
-[Demo](https://restraunt-menu.herokuapp.com/)
+[Demo](https://enigmatic-headland-80855.herokuapp.com/)
