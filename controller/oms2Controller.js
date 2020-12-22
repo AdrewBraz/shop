@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import model from '../models/item';
+import model from '../models/oms2';
 import excelController from './excelController';
 
-exports.getData = async (req, reply) => {
+const getData = async (req, reply) => {
   const { from, to } = req.body;
   const coll = await model.aggregate([{
     $facet: {
@@ -57,3 +57,6 @@ exports.getData = async (req, reply) => {
 
   reply.send({ groupedCodes, total, vmp });
 };
+
+
+export default getData;

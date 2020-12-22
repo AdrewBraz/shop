@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 mongoose.set('debug', true);
 const { Schema } = mongoose;
 
-const ItemSchema = new Schema({
+const oms2Schema = new Schema({
   COD: String,
   NAME: String,
   PRICE: String,
@@ -17,4 +17,4 @@ const ItemSchema = new Schema({
   DATE: Date,
 });
 
-export default mongoose.model('OMS2', ItemSchema, 'oms2');
+export default mongoose.model('OMS2', oms2Schema, 'oms2');
