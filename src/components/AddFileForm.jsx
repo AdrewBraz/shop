@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import React from 'react';
 import { format } from 'date-fns';
 import axios from 'axios';
+import Select from 'react-select';
 import { Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
@@ -12,10 +13,10 @@ import actions from '../actions';
 import validationSchema from '../validationSchema';
 import { listOfMonths, listOfYears, formatter } from '../../helpers';
 
-const AddFileForm = () => {
+const AddFileForm = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { groupedCodes } = useSelector(({ store }) => store);
+  const { data } = props;
   const generateOnSubmit = () => async (values) => {
     const dates = {
       from: `${values.fromYear}-${values.fromMonth}`,
@@ -39,6 +40,8 @@ const AddFileForm = () => {
     validationSchema,
     validateOnChange: true,
   });
+
+  const options = listOfYears.map((year) => ({ value: `${format(year, 'yyyy')}`, label: `${format(year, 'yyyy')}` }));
 
   return (
     <>
@@ -77,7 +80,7 @@ const AddFileForm = () => {
               {form.isSubmitting ? <Spinner animation="border" /> : 'Запрос'}
             </button>
           </div>
-          { groupedCodes.length <= 0 ? null : (
+          { data.length <= 0 ? null : (
             <div className="col-md-2">
               <a download href="/download" className="btn btn-success" role="button">
                 <FontAwesomeIcon icon={faFileExcel} />

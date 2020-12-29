@@ -1,5 +1,5 @@
 // @ts-check
-import { fetchData } from '../reducers/storeSlice';
+import { fetchData, selectDepartment } from '../reducers/storeSlice';
 import { modalStateOpen, modalStateClose, stateURL } from '../reducers/appSlice';
 
 export default {
@@ -7,4 +7,5 @@ export default {
   modalStateOpen,
   modalStateClose,
   stateURL,
+  selectDepartment,
 };

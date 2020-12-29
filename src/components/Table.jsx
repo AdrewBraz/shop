@@ -1,9 +1,10 @@
+// @ts-check
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import { ruNames } from '../../helpers';
 
 const TableOms = (props) => {
-  const { groupedCodes, total } = props;
+  const { data } = props;
   const renderItems = (list) => {
     const columnNames = Object.keys(ruNames);
     return (
@@ -25,14 +26,14 @@ const TableOms = (props) => {
           </tr>
         </thead>
         <tbody>
-          {renderItems(groupedCodes)}
-          {renderItems(total)}
+          {renderItems(list)}
+          {renderItems(list)}
         </tbody>
       </Table>
     );
   };
   return (
-    <div style={style}>{groupedCodes === undefined ? null : renderTable(groupedCodes)}</div>
+    <div style={style}>{data.length === 0 ? null : renderTable(data)}</div>
   );
 };
 
