@@ -1,5 +1,7 @@
+// @ts-check
 import fs from 'fs';
-import { getData } from '../controller/itemController';
+import getOms2Data from '../controller/oms2Controller';
+import getOms3Data from '../controller/oms3Controller';
 
 export default (router) => router
   .get('/', (_req, reply) => {
@@ -18,5 +20,8 @@ export default (router) => router
     reply.redirect('/');
   })
   .post('/oms2', async (_req, reply) => {
-    await getData(_req, reply);
+    await getOms2Data(_req, reply);
+  })
+  .post('/oms3', async (_req, reply) => {
+    await getOms3Data(_req, reply);
   });

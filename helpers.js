@@ -1,3 +1,4 @@
+// @ts-check
 import { addMonths, addYears } from 'date-fns';
 
 const getList = (start, fn, end) => {

@@ -1,3 +1,4 @@
+// @ts-check
 import ExcelJS from 'exceljs';
 import path from 'path';
 import { parseISO, format } from 'date-fns';
