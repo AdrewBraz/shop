@@ -2,10 +2,15 @@
 import React from 'react';
 import { Jumbotron, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Icon from '../../assets/lg.svg';
+
 
 const App = () => (
-  <div>
-    <Jumbotron>
+  <Container>
+    <Jumbotron className="bg-white">
+      <Link to="/">
+        <Icon style={{widht: '100px', height: '100px'}} />
+      </Link>
       <h1 className="text-center">Отчеты из ПУМП по принятым счетам</h1>
       <Container className="mt-5">
         <div className=" d-flex w-25 m-auto flex-row align-items-center justify-content-between">
@@ -14,7 +19,7 @@ const App = () => (
         </div>
       </Container>
     </Jumbotron>
-  </div>
+  </Container>
 );
 
 export default App;

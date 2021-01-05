@@ -5,8 +5,9 @@ import { ruNames } from '../../helpers';
 
 const TableOms = (props) => {
   const { data } = props;
+  console.log(data)
   const renderItems = (list) => {
-    const columnNames = Object.keys(ruNames);
+    const columnNames = Object.keys(list[0]);
     return (
       list.map((item) => (
         <tr key={item.NAME + item.TOTAL_PRICE}>
@@ -18,6 +19,7 @@ const TableOms = (props) => {
   const style = { overflow: 'auto', height: '60vh' };
   const renderTable = (list) => {
     const columnNames = Object.keys(list[0]);
+    console.log(columnNames)
     return (
       <Table style={{ position: 'relative' }} size="sm" striped bordered hover responsive>
         <thead>
@@ -26,7 +28,6 @@ const TableOms = (props) => {
           </tr>
         </thead>
         <tbody>
-          {renderItems(list)}
           {renderItems(list)}
         </tbody>
       </Table>

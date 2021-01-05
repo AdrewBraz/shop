@@ -2,14 +2,14 @@
 import ExcelJS from 'exceljs';
 import path from 'path';
 import { parseISO, format } from 'date-fns';
-import { ruNames } from '../helpers';
+import { ruNames } from '../../helpers';
 
-export default async (dates, { groupedCodes }) => {
-  groupedCodes.forEach((item) => {
+export default async (dates, coll ) => {
+  coll.forEach((item) => {
     item.TOTAL_PRICE = +item.TOTAL_PRICE;
   });
 
-  const keys = Object.keys(ruNames);
+  const keys = Object.keys(coll[0]);
   const { from, to } = dates;
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Омс 2');
@@ -32,7 +32,7 @@ export default async (dates, { groupedCodes }) => {
       showRowStripes: true,
     },
     columns,
-    rows: groupedCodes.map((item) => Object.values(item)),
+    rows: coll.map((item) => Object.values(item)),
   });
   worksheet.getCell('A3').alignment = { wrapText: true };
   worksheet.getCell('B3').alignment = { wrapText: true };
@@ -44,7 +44,7 @@ export default async (dates, { groupedCodes }) => {
   worksheet.getCell('H3').alignment = { wrapText: true };
   await workbook
     .xlsx
-    .writeFile(path.join(__dirname, '../server/export.xlsx'))
+    .writeFile(path.join(__dirname, '../export.xlsx'))
     .then(() => {
       console.log('saved');
     })

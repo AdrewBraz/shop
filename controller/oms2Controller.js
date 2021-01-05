@@ -1,7 +1,7 @@
 // @ts-check
 import mongoose from 'mongoose';
 import model from '../models/oms2';
-import excelController from './excelController';
+import excelController from '../server/excel/excelOms2';
 
 const getData = async (req, reply) => {
   const { from, to } = req.body;
@@ -25,7 +25,7 @@ const getData = async (req, reply) => {
     },
   ]);
 
-  // await excelController({ from, to }, { groupedCodes });
+  await excelController({ from, to }, coll);
 
   reply.send([coll]);
 };

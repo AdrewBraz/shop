@@ -7,17 +7,21 @@ const getData = async (req, reply) => {
   const coll = await model.aggregate([
     {
       $facet: {
-        overall: [
+        groupedDepartments: [
           { $match: { DATE: { $gte: new Date(from), $lte: new Date(to) } } },
           {
-            $addFields: {
-              TOTAL_PRICE: { $toString: '$TOTAL_PRICE' },
+            $group: {
+              _id: { ORD_NAME: '$ORD_NAME', COD: '$COD', NAME: '$NAME' }, NUM_USL: { $sum: '$NUM_USL' }, NUM_CI: { $sum: '$NUM_CI' }, TOTAL_PRICE: { $sum: '$TOTAL_PRICE' },
             },
           },
-          { $sort: { ORD_NAME: 1 } },
           {
-            $project: {
-              _id: 0, ORD_NAME: '$ORD_NAME', COD: '$COD', PATIENT_NUM: '$PATIENT_NUM', NAME: '$NAME', NUM_USL: '$USL', NUM_CI: '$NUM_CI', TOTAL_PRICE: '$TOTAL_PRICE',
+            $group: {
+              _id: '$_id.ORD_NAME',
+              codes: {
+                $push: {
+                  ORD_NAME: '$_id.ORD_NAME', COD: { $toInt: '$_id.COD' }, NAME: '$_id.NAME', NUM_USL: { $sum: '$NUM_USL' }, NUM_CI: { $sum: '$NUM_CI' }, TOTAL_PRICE: { $toString: { $sum: '$TOTAL_PRICE' } },
+                },
+              },
             },
           },
         ],
@@ -39,9 +43,18 @@ const getData = async (req, reply) => {
       },
     },
   ]);
-  const { overall, total } = coll[0];
+  const { groupedDepartments, total } = coll[0];
 
-  reply.send([overall, total]);
+  const data = groupedDepartments.reduce((acc, department) => {
+    department.codes.forEach((item) => {
+      acc.push(item);
+    });
+    return acc;
+  }, []);
+
+  console.log(data);
+
+  reply.send(data);
 };
 
 export default getData;
