@@ -15,6 +15,7 @@ const ruNames = {
   ORD_NAME: 'Наименование отделения',
   COD: 'Код услуги',
   NAME: 'Наименование услуги',
+  PATIENT_NUM: 'Кол-во пациентов',
   TYPE: 'тип',
   USL: 'Кол-во услуг за период',
   NUM_USL: 'Кол-во услуг за период',
@@ -24,6 +25,8 @@ const ruNames = {
   TOTAL_PRICE: 'Суммарная стоимость услуг (руб) за период',
 };
 
+const alphabetString = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
 const formatter = (date) => {
   const localeFormat = new Intl.DateTimeFormat('ru', { month: 'long' });
   return localeFormat.format(date);
@@ -32,5 +35,5 @@ const listOfYears = getList(new Date(2017, 12, 1), addYears, new Date(2020, 1, 1
 const listOfMonths = getList(new Date(2017, 12, 1), addMonths, new Date(2018, 12, 1));
 
 export {
-  listOfMonths, listOfYears, formatter, ruNames,
+  listOfMonths, listOfYears, formatter, ruNames, alphabetString
 };

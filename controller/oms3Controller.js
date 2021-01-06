@@ -1,6 +1,7 @@
 // @ts-check
 import mongoose from 'mongoose';
 import model from '../models/oms3';
+import excelController from '../server/excel/excel';
 
 const getData = async (req, reply) => {
   const { from, to } = req.body;
@@ -52,7 +53,7 @@ const getData = async (req, reply) => {
     return acc;
   }, []);
 
-  console.log(data);
+  await excelController({ from, to }, [data, total])
 
   reply.send(data);
 };

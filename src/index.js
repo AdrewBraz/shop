@@ -23,7 +23,6 @@ const store = configureStore({
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <BrowserRouter>
       <ConnectedRouter history={history}>
         <App />
         <Switch>
@@ -31,7 +30,6 @@ const Root = ({ store }) => (
           <Route exact path="/oms3" component={Oms3} />
         </Switch>
       </ConnectedRouter>
-    </BrowserRouter>
   </Provider>
 );
 render(<Root store={store} />, document.getElementById('main'));
