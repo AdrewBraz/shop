@@ -5,7 +5,6 @@ import { ruNames } from '../../helpers';
 
 const TableOms = (props) => {
   const { data } = props;
-  console.log(data)
   const renderItems = (list) => {
     const columnNames = Object.keys(list[0]);
     return (
@@ -19,12 +18,11 @@ const TableOms = (props) => {
   const style = { overflow: 'auto', height: '60vh' };
   const renderTable = (list) => {
     const columnNames = Object.keys(list[0]);
-    console.log(columnNames)
     return (
-      <Table style={{ position: 'relative' }} size="sm" striped bordered hover responsive>
+      <Table size="sm" striped bordered hover responsive>
         <thead>
-          <tr>
-            {columnNames.map((name) => <th style={{ position: 'sticky', top: '0' }} key={name}>{ruNames[name]}</th>)}
+          <tr style={{ background: '#C0C0C0' }}>
+            {columnNames.map((name) => <th style={{ position: 'sticky', top: '0', background: '#C0C0C0' }} key={name}>{ruNames[name]}</th>)}
           </tr>
         </thead>
         <tbody>

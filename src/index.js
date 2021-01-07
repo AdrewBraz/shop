@@ -9,6 +9,7 @@ import { createBrowserHistory } from 'history'
 
 
 import '../assets/application.scss';
+import '../assets/application.css';
 import App from './components/App'; 
 import createRootReducer from './reducers';
 import Oms3 from './components/Oms3';
