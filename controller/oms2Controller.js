@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 import model from '../models/oms2';
 import excelController from '../server/excel/excel';
 
-const getData = async (req, reply) => {
+const getData = async (req, reply, name) => {
+  console.log(req.path);
   const { from, to } = req.body;
   const coll = await model.aggregate([
     { $match: { DATE: { $gte: new Date(from), $lte: new Date(to) } } },
@@ -25,8 +26,8 @@ const getData = async (req, reply) => {
     },
   ]);
 
-  await excelController({ from, to }, [coll]);
-  reply.send([coll]);
+  await excelController({ from, to }, coll, name);
+  reply.send(coll);
 };
 
 export default getData;

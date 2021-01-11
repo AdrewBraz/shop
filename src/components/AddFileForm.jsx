@@ -3,7 +3,6 @@ import { useFormik } from 'formik';
 import React from 'react';
 import { format } from 'date-fns';
 import axios from 'axios';
-import Select from 'react-select';
 import { Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileExcel } from '@fortawesome/free-solid-svg-icons';

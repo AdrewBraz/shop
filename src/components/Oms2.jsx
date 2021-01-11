@@ -11,7 +11,7 @@ const Oms2 = () => {
     <Container>
       <AddFileForm data={data} />
       { data.length === 0 ? null
-        : (<Table data={data[0]} />)}
+        : (<Table data={data} />)}
     </Container>
   );
 };

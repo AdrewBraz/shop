@@ -4,12 +4,11 @@ import { Jumbotron, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Icon from '../../assets/lg.svg';
 
-
 const App = () => (
   <Container>
     <Jumbotron className="bg-white d-flex align-items-center flex-column p-2">
       <Link to="/">
-        <Icon style={{width: '100px', height: '100px'}} />
+        <Icon style={{ width: '100px', height: '100px' }} />
       </Link>
       <h1 className="text-center">Отчеты из ПУМП по принятым счетам</h1>
       <Container className="mt-5">

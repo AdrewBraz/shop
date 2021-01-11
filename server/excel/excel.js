@@ -4,18 +4,17 @@ import path from 'path';
 import { parseISO, format } from 'date-fns';
 import { ruNames, alphabetString } from '../../helpers';
 
-const tableBuilder = (list, position, worksheet) => {
+const tableBuilder = (list, worksheet, position = 0) => {
   list.forEach((item) => {
     item.TOTAL_PRICE = +item.TOTAL_PRICE;
   });
   const keys = Object.keys(list[0]);
-  const r = keys.map((item) => ruNames[item]);
-  console.log(keys, r, position);
+  const length = keys.length + position;
   const columns = keys.map((key) => (
-    { name: ruNames[key], filterButton: true, style: { width: 15 } }));
+    { name: ruNames[key], filterButton: true, style: { width: ruNames[key].length } }));
   worksheet.addTable({
     name: 'MyTable',
-    ref: `${position}`,
+    ref: `${alphabetString[position]}3`,
     headerRow: true,
     totalsRow: true,
     displayName: 'medgroup',
@@ -26,11 +25,15 @@ const tableBuilder = (list, position, worksheet) => {
     columns,
     rows: list.map((item) => Object.values(item)),
   });
+  let i = position;
+  while (i < length) {
+    worksheet.getCell(`${alphabetString[i]}3`).alignment = { wrapText: true };
+    i++;
+  }
 };
 
-const sheetBuilder = async (coll, dates, name = 'OMS2') => {
+const sheetBuilder = async (coll, dates, workbook, name = 'ОМС 2') => {
   const { from, to } = dates;
-  const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet(`${name}`);
   worksheet.headerFooter.differentFirst = true;
   worksheet.headerFooter.firstHeader = `${name}`;
@@ -38,20 +41,12 @@ const sheetBuilder = async (coll, dates, name = 'OMS2') => {
   worksheet.mergeCells('D1:F1');
   worksheet.getCell('A1').value = `Отчет за период с ${format(parseISO(from), 'dd-MM-yyyy')}`;
   worksheet.getCell('D1').value = `по ${format(parseISO(to), 'dd-MM-yyyy')}`;
-  let letter = 0;
-  coll.length > 1 ? coll.forEach((item) => {
-    const { length } = Object.keys(item[0]);
-    tableBuilder(item, `${alphabetString[letter]}3`, worksheet);
-    letter = length + 5;
-  }) : tableBuilder(coll[0], 'A3', worksheet);
-  worksheet.getCell('A3').alignment = { wrapText: true };
-  worksheet.getCell('B3').alignment = { wrapText: true };
-  worksheet.getCell('C3').alignment = { wrapText: true };
-  worksheet.getCell('D3').alignment = { wrapText: true };
-  worksheet.getCell('E3').alignment = { wrapText: true };
-  worksheet.getCell('F3').alignment = { wrapText: true };
-  worksheet.getCell('G3').alignment = { wrapText: true };
-  worksheet.getCell('H3').alignment = { wrapText: true };
+  tableBuilder(coll, worksheet);
+};
+
+export default async (dates, coll, sheetName) => {
+  const workbook = new ExcelJS.Workbook();
+  sheetBuilder(coll, dates, workbook, sheetName);
   await workbook
     .xlsx
     .writeFile(path.join(__dirname, '../export.xlsx'))
@@ -61,8 +56,4 @@ const sheetBuilder = async (coll, dates, name = 'OMS2') => {
     .catch((err) => {
       console.log('err', err);
     });
-};
-
-export default async (dates, coll) => {
-  await sheetBuilder(coll, dates);
 };

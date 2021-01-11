@@ -35,5 +35,5 @@ const listOfYears = getList(new Date(2017, 12, 1), addYears, new Date(2020, 1, 1
 const listOfMonths = getList(new Date(2017, 12, 1), addMonths, new Date(2018, 12, 1));
 
 export {
-  listOfMonths, listOfYears, formatter, ruNames, alphabetString
+  listOfMonths, listOfYears, formatter, ruNames, alphabetString,
 };

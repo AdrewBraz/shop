@@ -20,8 +20,9 @@ export default (router) => router
     reply.redirect('/');
   })
   .post('/oms2', async (_req, reply) => {
-    await getOms2Data(_req, reply);
+    console.log(_req.query);
+    await getOms2Data(_req, reply, 'ОМС 2');
   })
   .post('/oms3', async (_req, reply) => {
-    await getOms3Data(_req, reply);
+    await getOms3Data(_req, reply, 'ОМС 3');
   });
