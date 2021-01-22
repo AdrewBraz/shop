@@ -17,7 +17,6 @@ const TableOms = (props) => {
   };
   const style = { overflow: 'auto', height: '60vh' };
   const renderTable = (list) => {
-    console.log(list);
     const columnNames = Object.keys(list[0]);
     return (
       <Table size="sm" striped bordered hover responsive>
