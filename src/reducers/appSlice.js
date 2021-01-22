@@ -3,20 +3,19 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const app = createSlice({
   name: 'app',
-  initialState: {},
+  initialState: {modal: 'close'},
   reducers: {
     modalStateOpen(state) {
       state.modal = 'open';
+      return state;
     },
     modalStateClose(state) {
       state.modal = 'close';
-    },
-    stateURL(state, { payload }) {
-      state.url = payload;
-    },
+      return state;
+    }
   },
 });
 
-export const { modalStateOpen, modalStateClose, stateURL } = app.actions;
+export const { modalStateOpen, modalStateClose } = app.actions;
 
 export default app.reducer;

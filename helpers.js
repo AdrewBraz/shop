@@ -31,7 +31,7 @@ const formatter = (date) => {
   const localeFormat = new Intl.DateTimeFormat('ru', { month: 'long' });
   return localeFormat.format(date);
 };
-const listOfYears = getList(new Date(2017, 12, 1), addYears, new Date(2020, 1, 1));
+const listOfYears = getList(new Date(2017, 12, 1), addYears, new Date());
 const listOfMonths = getList(new Date(2017, 12, 1), addMonths, new Date(2018, 12, 1));
 
 export {

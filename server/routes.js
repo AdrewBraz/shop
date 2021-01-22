@@ -1,7 +1,22 @@
 // @ts-check
 import fs from 'fs';
+import multer from 'fastify-multer';
 import getOms2Data from '../controller/oms2Controller';
 import getOms3Data from '../controller/oms3Controller';
+import storeData from '../controller/oms1Controller';
+import parser from './excel/parser';
+import path from 'path';
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, `${path.join(__dirname, '../uploads')}`)
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+
+const upload = multer({ storage: storage })
 
 export default (router) => router
   .get('/', (_req, reply) => {
@@ -25,4 +40,17 @@ export default (router) => router
   })
   .post('/oms3', async (_req, reply) => {
     await getOms3Data(_req, reply, 'ОМС 3');
-  });
+  })
+  .post('/parse',
+  { preHandler: upload.single('excel') },
+  async (_req, reply) => {
+    const { date } = _req.body;
+    const { path } = _req.file;
+    const data = await parser(path)
+    fs.unlink(_req.file.path,  (err) => {
+      if (err) throw err;
+      console.log(`${path} file was deleted`);
+    })
+    await storeData(data, reply, date)
+  }
+)

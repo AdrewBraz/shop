@@ -5,7 +5,7 @@ import excelController from '../server/excel/excel';
 
 const getData = async (req, reply, name) => {
   const { from, to } = req.body;
-  const coll = await model.aggregate([
+  const coll1 = await model.aggregate([
     { $match: { DATE: { $gte: new Date(from), $lte: new Date(to) } } },
     {
       $group: {
@@ -21,15 +21,21 @@ const getData = async (req, reply, name) => {
           },
         },
       },
-    },
+    }
   ]);
 
-  const data = coll.reduce((acc, department) => {
+  const coll2 = await model.aggregate([
+    { $match: { DATE: { $gte: new Date(from), $lte: new Date(to) } } },
+    { $group: { _id: { ORD_NAME: '$ORD_NAME' }, PATIENT_NUM:  {$sum: '$PATIENT_NUM'} } },
+  ])
+
+  const data = coll1.reduce((acc, department) => {
+    console.log(department._id)
     department.codes.forEach((item) => {
       acc.push(item);
     });
     return acc;
-  }, []);
+  }, [])
 
   await excelController({ from, to }, data, name);
 
