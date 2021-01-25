@@ -18,6 +18,17 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
+const paths = {
+  oms2: {
+    keys: ['COD', 'NAME', 'PRICE', 'PRICE_D', 'USL', 'DAYS', 'NUM_DV', 'NUM_DOC', 'NUM_CI', 'TOTAL_PRICE', 'DATE'],
+    flags: ['1', 'Итого:']
+  },
+  oms3: {
+    keys: ['ID', 'ORD_NAME', 'PATIENT_NUM', 'COD', 'NAME', 'NUM_USL', 'PRICE_ONE', 'NUM_CI', 'TOTAL_PRICE', 'DATE'],
+    flags: []
+  }
+}
+
 export default (router) => router
   .get('/', (_req, reply) => {
     reply.view('index.pug');
@@ -32,10 +43,10 @@ export default (router) => router
     reply.send(file);
   })
   .get('/*', (_req, reply) => {
+    console.log(_req.path)
     reply.redirect('/');
   })
   .post('/oms2', async (_req, reply) => {
-    console.log(_req.query);
     await getOms2Data(_req, reply, 'ОМС 2');
   })
   .post('/oms3', async (_req, reply) => {
@@ -44,13 +55,15 @@ export default (router) => router
   .post('/parse',
   { preHandler: upload.single('excel') },
   async (_req, reply) => {
-    const { date } = _req.body;
+    const { date, report } = _req.body;
+    const { keys, flags } = paths[report]
     const { path } = _req.file;
-    const data = await parser(path)
+    const data = await parser(path, keys, flags)
     fs.unlink(_req.file.path,  (err) => {
       if (err) throw err;
       console.log(`${path} file was deleted`);
     })
-    await storeData(data, reply, date)
+    // await storeData(data, reply, date)
+    await reply.send({data})
   }
 )

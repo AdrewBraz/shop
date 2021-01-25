@@ -30,4 +30,35 @@ const getData = async (req, reply, name) => {
   reply.send(coll);
 };
 
+const storeData = async (data, reply, date = '2018-01-01') => {
+  JSON.parse(data).forEach( item => {
+    item['COD'] = parseInt(item['COD'].replace(/^0*/, ''));
+    item['PRICE'] = item['PRICE'].toString().replace(/\s+/g, '')
+    item['PRICE_D'] = item['PRICE_D'].toString().replace(/\s+/g, '')
+    item['TOTAL_PRICE'] = item['TOTAL_PRICE'].toString().replace(/\s+/g, '')
+    item.TYPE = item['COD'] < 60000 ? 'AMB' : 'STAC';
+  })
+
+  JSON.parse(data).forEach(async(el) => {
+      const newItem = new model({
+        COD: el.COD,
+        NAME: el.NAME,
+        PRICE: el.PRICE,
+        PRICE_D: el.PRICE_D,
+        USL: el.USL,
+        DAYS: el.DAYS,
+        NUM_DV: el.NUM_DV,
+        NUM_DOC: el.NUM_DOC,
+        NUM_CI: el.NUM_CI,
+        TOTAL_PRICE: el.TOTAL_PRICE,
+        DATE: date,
+        TYPE: el.TYPE
+      })
+      await newItem.save()
+  });
+
+   await reply.send({message: 'saved'});
+};
+
+
 export default getData;

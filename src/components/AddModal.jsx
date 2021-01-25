@@ -16,11 +16,11 @@ const AddModal = () => {
     }
 
     const generateOnSubmit = () => async (values) => {
-        const { excel, month, year } = values;
-        console.log(excel)
+        const { excel, month, year, report } = values;
         const formdata = new FormData()
         formdata.append('excel', excel);
         formdata.append('date', `${year}-${month}`)
+        formdata.append('report', report)
         console.log(formdata)
         try{
           await axios.post('/parse', formdata).then(() => console.log('success'));
@@ -64,6 +64,15 @@ const AddModal = () => {
               <select className="form-control" name="month" id="month" onChange={form.handleChange}>
                 <option value="">Выберите месяц</option>
                 {listOfMonths.map((month) => <option key={`${month}`} value={`${format(month, 'MM-dd')}`}>{formatter(month)}</option>)}
+              </select>
+            </div>
+            <div className="form-group col-md-2">
+              <label htmlFor="report">Название Отчета</label>
+              <select className="form-control" name="report" id="report" onChange={form.handleChange}>
+                <option value="">Выберите отчет</option>
+                <option value="oms1">ОМС 1</option>
+                <option value="oms2">ОМС 2</option>
+                <option value="oms3">ОМС 3</option>
               </select>
             </div>
           </div>
