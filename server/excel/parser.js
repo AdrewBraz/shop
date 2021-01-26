@@ -1,17 +1,21 @@
 import Excel from 'exceljs';
 
-export default async (path, keys = [], flags = []) => {
-    console.log(path)
+export default async (path, params = [], sheet) => {
     const workbook = new Excel.Workbook();
+    const [start, end] = params;
+    const filters = [start, end, 'Итого', ' ', null, undefined, ]
     const data = await workbook.xlsx.readFile(path)
     .then(() => {
-        const worksheet = workbook.getWorksheet('Sheet0');
+        const worksheet = workbook.getWorksheet(sheet);
         const arr = [];
         let isNeeded = false
         worksheet.eachRow({ includeEmpty: true }, function(row, rowNumber) {
           const el = row.values[1];
-          if(flags.includes(el)){
-              isNeeded = !isNeeded;
+          if(el === start){
+              isNeeded = true
+          }
+          if(el === end){
+              isNeeded = false;
           }
           isNeeded ? arr.push(row.values.slice(1)) : null
         })
@@ -20,14 +24,6 @@ export default async (path, keys = [], flags = []) => {
     .catch((err) => {
     console.log(err)
     });
-    const json = data.slice(1).reduce((acc, row) => {
-        const obj = {};
-        row.forEach((item, i) => {
-            obj[keys[i]] = item;
-        });
-        acc.push(obj);
-        return acc
-    }, []);
-    console.log(JSON.stringify(json))
-    return JSON.stringify(json)
+    const filteredData = data.filter(item => !filters.includes(item[0]))
+    return filteredData
 }

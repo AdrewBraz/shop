@@ -5,6 +5,7 @@ import getOms2Data from '../controller/oms2Controller';
 import getOms3Data from '../controller/oms3Controller';
 import storeData from '../controller/oms1Controller';
 import parser from './excel/parser';
+import oms1Parser from './excel/oms1JSONBuilder';
 import path from 'path';
 
 const storage = multer.diskStorage({
@@ -18,15 +19,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-const paths = {
-  oms2: {
-    keys: ['COD', 'NAME', 'PRICE', 'PRICE_D', 'USL', 'DAYS', 'NUM_DV', 'NUM_DOC', 'NUM_CI', 'TOTAL_PRICE', 'DATE'],
-    flags: ['1', 'Итого:']
-  },
-  oms3: {
-    keys: ['ID', 'ORD_NAME', 'PATIENT_NUM', 'COD', 'NAME', 'NUM_USL', 'PRICE_ONE', 'NUM_CI', 'TOTAL_PRICE', 'DATE'],
-    flags: []
-  }
+const params = {
+  oms2: ['1', 'Итого:'],
+  oms3: ['Филиал', 'ВСЕГО'],
+  oms1: [' - По плательщику и профилю', 'Всего']
 }
 
 export default (router) => router
@@ -56,13 +52,15 @@ export default (router) => router
   { preHandler: upload.single('excel') },
   async (_req, reply) => {
     const { date, report } = _req.body;
-    const { keys, flags } = paths[report]
+    const parserParams = params[report]
     const { path } = _req.file;
-    const data = await parser(path, keys, flags)
+    const sheet = report === 'oms3' ? 'ОМС-3' : 'Sheet0';
+    const data = await parser(path, parserParams, sheet)
     fs.unlink(_req.file.path,  (err) => {
       if (err) throw err;
       console.log(`${path} file was deleted`);
     })
+    const result = oms1Parser(data)
     // await storeData(data, reply, date)
     await reply.send({data})
   }
