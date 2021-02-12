@@ -5,7 +5,6 @@ import getOms2Data from '../controller/oms2Controller';
 import getOms3Data from '../controller/oms3Controller';
 import storeData from '../controller/oms1Controller';
 import parser from './excel/parser';
-import oms1Parser from './excel/oms1JSONBuilder';
 import path from 'path';
 
 const storage = multer.diskStorage({
@@ -39,7 +38,6 @@ export default (router) => router
     reply.send(file);
   })
   .get('/*', (_req, reply) => {
-    console.log(_req.path)
     reply.redirect('/');
   })
   .post('/oms2', async (_req, reply) => {
@@ -60,7 +58,7 @@ export default (router) => router
       if (err) throw err;
       console.log(`${path} file was deleted`);
     })
-    const result = oms1Parser(data)
+    // const result = oms1Parser(data)
     // await storeData(data, reply, date)
     await reply.send({data})
   }

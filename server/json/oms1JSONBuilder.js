@@ -1,4 +1,5 @@
 const addtoObject = (obj, field, item) => {
+  console.log(field, item)
   switch(field){
     case 'Наименование':
       obj['SMO_NAME'] = item.replace(/"([^"]+(?="))"/g, '$1')

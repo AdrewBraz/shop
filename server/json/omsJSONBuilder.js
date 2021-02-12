@@ -1,4 +1,4 @@
-export default async (data, keys) => {
+export default  (data, keys) => {
     const json = data.slice(1).reduce((acc, row) => {
       const obj = {}
       row.forEach((item, i) => {
