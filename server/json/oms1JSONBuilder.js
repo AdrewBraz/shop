@@ -1,3 +1,5 @@
+// @ts-check
+
 const addtoObject = (obj, field, item) => {
   console.log(field, item)
   switch(field){

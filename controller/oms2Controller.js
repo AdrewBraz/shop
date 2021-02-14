@@ -1,10 +1,12 @@
 // @ts-check
-import mongoose from 'mongoose';
-import model from '../models/oms2';
 import excelController from '../server/excel/excel';
 
-const getData = async (req, reply, name) => {
-  console.log(req.path);
+const getDates = async (model) => {
+  const coll = await model.find().distinct('DATE');
+  return coll;
+};
+
+const getData = async (req, reply, model) => {
   const { from, to } = req.body;
   const coll = await model.aggregate([
     { $match: { DATE: { $gte: new Date(from), $lte: new Date(to) } } },
@@ -26,39 +28,46 @@ const getData = async (req, reply, name) => {
     },
   ]);
 
-  await excelController({ from, to }, coll, name);
+  await excelController({ from, to }, coll);
   reply.send(coll);
 };
 
-const storeData = async (data, reply, date = '2018-01-01') => {
-  JSON.parse(data).forEach( item => {
-    item['COD'] = parseInt(item['COD'].replace(/^0*/, ''));
-    item['PRICE'] = item['PRICE'].toString().replace(/\s+/g, '')
-    item['PRICE_D'] = item['PRICE_D'].toString().replace(/\s+/g, '')
-    item['TOTAL_PRICE'] = item['TOTAL_PRICE'].toString().replace(/\s+/g, '')
-    item.TYPE = item['COD'] < 60000 ? 'AMB' : 'STAC';
-  })
+const storeData = async (data, reply, model, date = '2018-01-01') => {
+  const jsonData = JSON.parse(data);
 
-  JSON.parse(data).forEach(async(el) => {
-      const newItem = new model({
-        COD: el.COD,
-        NAME: el.NAME,
-        PRICE: el.PRICE,
-        PRICE_D: el.PRICE_D,
-        USL: el.USL,
-        DAYS: el.DAYS,
-        NUM_DV: el.NUM_DV,
-        NUM_DOC: el.NUM_DOC,
-        NUM_CI: el.NUM_CI,
-        TOTAL_PRICE: el.TOTAL_PRICE,
-        DATE: date,
-        TYPE: el.TYPE
-      })
-      await newItem.save()
+  jsonData.forEach((item) => {
+    item.COD = parseInt(item.COD.replace(/^0*/, ''));
+    item.PRICE = item.PRICE.toString().replace(/\s+/g, '');
+    item.PRICE_D = item.PRICE_D.toString().replace(/\s+/g, '');
+    item.TOTAL_PRICE = item.TOTAL_PRICE.toString().replace(/\s+/g, '');
+    item.TYPE = item.COD < 60000 ? 'AMB' : 'STAC';
   });
 
-   await reply.send({message: 'saved'});
+  jsonData.forEach(async (el) => {
+    const newItem = new model({
+      COD: el.COD,
+      NAME: el.NAME,
+      PRICE: el.PRICE,
+      PRICE_D: el.PRICE_D,
+      USL: el.USL,
+      DAYS: el.DAYS,
+      NUM_DV: el.NUM_DV,
+      NUM_DOC: el.NUM_DOC,
+      NUM_CI: el.NUM_CI,
+      TOTAL_PRICE: el.TOTAL_PRICE,
+      DATE: date,
+      TYPE: el.TYPE,
+    });
+    await newItem.save();
+  });
+
+  await reply.send({ message: 'saved' });
 };
 
+const oms2Controller = {
+  getDates,
+  getData,
+  storeData
+}
 
-export default getData;
+export default oms2Controller;

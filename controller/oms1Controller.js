@@ -1,7 +1,6 @@
 // @ts-check
-import model from '../models/oms1';
 
-const storeData = async (data, reply, date = '2018-01-01') => {
+const storeData = async (data, reply, model, date = '2018-01-01') => {
   console.log(date)
   JSON.parse(data).forEach(async(el) => {
       const newItem = new model({

@@ -32,11 +32,11 @@ const tableBuilder = (list, worksheet, position = 0) => {
   }
 };
 
-const sheetBuilder = async (coll, dates, workbook, name = 'ОМС 2') => {
+const sheetBuilder = async (coll, dates, workbook) => {
   const { from, to } = dates;
-  const worksheet = workbook.addWorksheet(`${name}`);
+  const worksheet = workbook.addWorksheet('Report');
   worksheet.headerFooter.differentFirst = true;
-  worksheet.headerFooter.firstHeader = `${name}`;
+  worksheet.headerFooter.firstHeader = 'Report';
   worksheet.mergeCells('A1:C1');
   worksheet.mergeCells('D1:F1');
   worksheet.getCell('A1').value = `Отчет за период с ${format(parseISO(from), 'dd-MM-yyyy')}`;
@@ -44,9 +44,9 @@ const sheetBuilder = async (coll, dates, workbook, name = 'ОМС 2') => {
   tableBuilder(coll, worksheet);
 };
 
-export default async (dates, coll, sheetName) => {
+export default async (dates, coll) => {
   const workbook = new ExcelJS.Workbook();
-  sheetBuilder(coll, dates, workbook, sheetName);
+  sheetBuilder(coll, dates, workbook);
   await workbook
     .xlsx
     .writeFile(path.join(__dirname, '../export.xlsx'))

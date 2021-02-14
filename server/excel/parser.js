@@ -1,3 +1,5 @@
+// @ts-check
+
 import Excel from 'exceljs';
 
 export default async (path, params = [], sheet) => {
