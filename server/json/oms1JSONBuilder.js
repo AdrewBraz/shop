@@ -9,6 +9,12 @@ const addtoObject = (obj, field, item) => {
     case 'Профиль':
       obj['PROFILE'] = item;
       break;
+    case 'МС':
+      obj['MDSTAND'] = item;
+      break;
+    case 'УСЛ':
+      obj['USL'] = item;
+      break;
     case 'Сумма':
       obj['TOTAL_PRICE'] = item.toString().replace(/\s+/g, '').replace(/[,]/g, '.')
       break;

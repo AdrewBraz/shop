@@ -71,9 +71,9 @@ const AddModal = () => {
               <label htmlFor="report">Название Отчета</label>
               <select className="form-control" name="report" id="report" onChange={form.handleChange}>
                 <option value="">Выберите отчет</option>
-                <option value="oms1">ОМС 1</option>
-                <option value="oms2">ОМС 2</option>
-                <option value="oms3">ОМС 3</option>
+                <option value="/oms1">ОМС 1</option>
+                <option value="/oms2">ОМС 2</option>
+                <option value="/oms3">ОМС 3</option>
               </select>
             </div>
           </div>

@@ -44,6 +44,14 @@ export default (router) => {
       { preHandler: upload.single('excel') },
       async (_req, reply) => {
         const { date, report } = _req.body;
+        const omsController = controller[report];
+        const omsModel = model[report]
+        console.log(omsController)
+        const registeredDates = (await omsController.getDates(omsModel)).map(item => item.getTime())
+        if(registeredDates.includes(new Date(date).getTime())){
+          reply.send({error: 'Отчет за этот период времени уже внесен в базу'})
+          return reply
+        }
         const parserParams = params[report];
         const { path } = _req.file;
         const sheet = report === 'oms3' ? 'ОМС-3' : 'Sheet0';
@@ -54,7 +62,7 @@ export default (router) => {
         });
         // const result = oms1Parser(data)
         // await storeData(data, reply, date)
-        await reply.send({ data });
+        await reply.send({ message: 'Отчет успешно добавлен в базу' });
       });
   ['/oms1', '/oms2', '/oms3'].forEach((route) => {
     router.post(route, async (_req, reply) => {

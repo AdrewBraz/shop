@@ -7,6 +7,8 @@ const { Schema } = mongoose;
 const oms1Schema = new Schema({
   SMO_NAME: String,
   PROFILE: String,
+  MDSTAND: Number,
+  USL: Number,
   TOTAL_PRICE: mongoose.Types.Decimal128,
   DATE: Date,
 });
