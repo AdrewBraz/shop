@@ -25,9 +25,15 @@ const AddModal = () => {
     formdata.append('date', `${year}-${month}`);
     formdata.append('report', report);
     try {
-      await axios.post('/parse', formdata).then(() => console.log('success'));
+      await axios.post('/parse', formdata).then(({data}) => {
+        console.log(data)
+        dispatch(actions.addMessage(data))
+        console.log('success')
+      });
     } catch (e) {
-      throw new Error('Something went wrong');
+      const { data } = e.response;
+      const status = true;
+      dispatch(actions.addError({data, status}))
     }
     dispatch(actions.modalStateClose());
   };

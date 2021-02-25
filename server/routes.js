@@ -5,6 +5,7 @@ import path from 'path';
 import controller from '../controller';
 import model from '../models'
 import parser from './excel/parser';
+import json from './json'
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -18,9 +19,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const params = {
-  oms2: ['1', 'Итого:'],
-  oms3: ['Филиал', 'ВСЕГО'],
-  oms1: [' - По плательщику и профилю', 'Всего'],
+  '/oms2': ['1', 'Итого:'],
+  '/oms3': ['Филиал', 'ВСЕГО'],
+  '/oms1': [' - По плательщику и профилю', 'Всего'],
 };
 
 export default (router) => {
@@ -46,23 +47,26 @@ export default (router) => {
         const { date, report } = _req.body;
         const omsController = controller[report];
         const omsModel = model[report]
+        const jsonBuilder = json(report)
         console.log(omsController)
         const registeredDates = (await omsController.getDates(omsModel)).map(item => item.getTime())
         if(registeredDates.includes(new Date(date).getTime())){
-          reply.send({error: 'Отчет за этот период времени уже внесен в базу'})
+          reply.code(500)
+          reply.send( 'Отчет за этот период времени уже внесен в базу')
           return reply
         }
         const parserParams = params[report];
         const { path } = _req.file;
         const sheet = report === 'oms3' ? 'ОМС-3' : 'Sheet0';
         const data = await parser(path, parserParams, sheet);
+        console.log(omsModel)
         fs.unlink(_req.file.path, (err) => {
           if (err) throw err;
           console.log(`${path} file was deleted`);
         });
-        // const result = oms1Parser(data)
-        // await storeData(data, reply, date)
-        await reply.send({ message: 'Отчет успешно добавлен в базу' });
+        const result = await jsonBuilder(data)
+
+        await omsController.storeData(result, reply, omsModel, date)
       });
   ['/oms1', '/oms2', '/oms3'].forEach((route) => {
     router.post(route, async (_req, reply) => {

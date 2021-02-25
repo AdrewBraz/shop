@@ -1,7 +1,6 @@
 // @ts-check
 
 const addtoObject = (obj, field, item) => {
-  console.log(field, item)
   switch(field){
     case 'Наименование':
       obj['SMO_NAME'] = item.replace(/"([^"]+(?="))"/g, '$1')
@@ -12,7 +11,7 @@ const addtoObject = (obj, field, item) => {
     case 'МС':
       obj['MDSTAND'] = item;
       break;
-    case 'УСЛ':
+    case 'Усл':
       obj['USL'] = item;
       break;
     case 'Сумма':

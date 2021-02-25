@@ -1,17 +1,37 @@
 // @ts-check
 import React from 'react';
-import { Jumbotron, Container, Button } from 'react-bootstrap';
+import { useEffect } from 'react';
+import { Jumbotron, Container, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Icon from '../../assets/lg.svg';
 import AddModal from './AddModal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from '../actions';
 
 const App = () => {
   const dispatch = useDispatch();
+  const { errorText, errorStatus, messageText, messageStatus } = useSelector(({ app }) => app);
+  console.log(messageText)
   const openModal = () => {
     dispatch(actions.modalStateOpen())
   }
+
+  useEffect(() => {
+    if(errorStatus){
+      const timer = setTimeout(() => {
+        dispatch(actions.removeError())
+      }, 2500);
+      return () => clearTimeout(timer)
+    }
+  }, [errorStatus])
+  useEffect(() => {
+    if(messageStatus){
+      const timer = setTimeout(() => {
+        dispatch(actions.removeMessage())
+      }, 2500);
+      return () => clearTimeout(timer)
+    }
+  }, [messageStatus])
   return (
     <>
       <Container>
@@ -31,6 +51,8 @@ const App = () => {
       </Container>
       <Container>
         <AddModal />
+        <Alert variant='danger' show={errorStatus}>{errorText}</Alert>
+        <Alert variant='info' show={messageStatus}>{messageText}</Alert>
       </Container>
     </>
   )
