@@ -13,6 +13,7 @@ import App from './components/App';
 import createRootReducer from './reducers';
 import Oms3 from './components/Oms3';
 import Oms2 from './components/Oms2';
+import Oms1 from './components/Oms1'
 
 const history = createBrowserHistory();
 const middleware = [...getDefaultMiddleware(), routerMiddleware(history)];
@@ -26,6 +27,7 @@ const Root = ({ store }) => (
     <ConnectedRouter history={history}>
       <App />
       <Switch>
+        <Route exact path="/oms1" component={Oms1} />
         <Route exact path="/oms2" component={Oms2} />
         <Route exact path="/oms3" component={Oms3} />
       </Switch>

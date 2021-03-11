@@ -27,6 +27,8 @@ const getData = async (req, reply, model) => {
     },
   ]);
 
+  console.log(coll)
+
   await excelController({ from, to }, coll);
   reply.send(coll);
 };
