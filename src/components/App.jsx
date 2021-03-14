@@ -42,7 +42,7 @@ const App = () => {
           <h1 className="text-center">Отчеты из ПУМП по принятым счетам</h1>
           <Container className="mt-5">
             <div className=" d-flex w-50 m-auto flex-row align-items-center justify-content-between">
-              <Link className="btn btn-info btn-lg" role="button" to="/oms1">ОМС 1</Link>
+              {/* <Link aria-disabled className="btn btn-info btn-lg" role="button" to="/oms1">ОМС 1</Link> */}
               <Link className="btn btn-info btn-lg" role="button" to="/oms2">ОМС 2</Link>
               <Link className="btn btn-info btn-lg" role="button" to="/oms3">OМС 3</Link>
               <Button onClick={() => { openModal()}}>Добавить</Button>

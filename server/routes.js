@@ -48,7 +48,6 @@ export default (router) => {
         const omsController = controller[report];
         const omsModel = model[report]
         const jsonBuilder = json(report)
-        console.log(omsController)
         const registeredDates = (await omsController.getDates(omsModel)).map(item => item.getTime())
         if(registeredDates.includes(new Date(date).getTime())){
           reply.code(500)
@@ -59,12 +58,11 @@ export default (router) => {
         const { path } = _req.file;
         const sheet = report === 'oms3' ? 'ОМС-3' : 'Sheet0';
         const data = await parser(path, parserParams, sheet);
-        console.log(omsModel)
         fs.unlink(_req.file.path, (err) => {
           if (err) throw err;
           console.log(`${path} file was deleted`);
         });
-        const result = await jsonBuilder(data)
+        const result = await jsonBuilder(data, report)
 
         await omsController.storeData(result, reply, omsModel, date)
       });
